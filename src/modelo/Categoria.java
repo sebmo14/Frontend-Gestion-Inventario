@@ -4,13 +4,11 @@
  */
 package modelo;
 
+
 import java.time.LocalDate;
 
-/**
- *
- * @author MI PC
- */
 public class Categoria {
+
     String nombre, descripcion;
     int Id;
     LocalDate fechaCreacion;
