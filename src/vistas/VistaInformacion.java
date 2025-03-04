@@ -84,13 +84,13 @@ public class VistaInformacion extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Correo:");
 
-        jLabel5.setText("cedula");
+        jLabel5.setText("1289034");
 
-        jLabel6.setText("nombre");
+        jLabel6.setText("Samuel Morrales");
 
-        jLabel7.setText("correo");
+        jLabel7.setText("SamuelMorrales@ventas.com");
 
-        jLabel8.setText("ventas");
+        jLabel8.setText("74");
 
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/person-svgrepo-com (1).png"))); // NOI18N
@@ -110,7 +110,7 @@ public class VistaInformacion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addContainerGap(331, Short.MAX_VALUE))
+                        .addContainerGap(353, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)

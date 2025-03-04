@@ -4,6 +4,9 @@
  */
 package vistas;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MI PC
@@ -16,6 +19,7 @@ public class VistaProveedores extends javax.swing.JFrame {
     public VistaProveedores() {
         initComponents();
         setLocationRelativeTo(this);
+        llenarTablaProveedores(jTable1);
     }
 
     /**
@@ -54,13 +58,10 @@ public class VistaProveedores extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre", "Correo", "Direccion", "Numero"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -143,7 +144,23 @@ public class VistaProveedores extends javax.swing.JFrame {
         vp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGestionProActionPerformed
+    public static void llenarTablaProveedores(JTable tabla) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 
+        // Datos quemados
+        Object[][] datos = {
+            {"P001", "Tech Corp", "contacto@techcorp.com", "Calle 123, Ciudad", "123456789"},
+            {"P002", "Moda Express", "info@modaexpress.com", "Avenida 45, Ciudad", "987654321"},
+            {"P003", "Super Frutas", "ventas@superfrutas.com", "Carrera 10, Ciudad", "321654987"},
+            {"P004", "Juguetón", "soporte@jugueton.com", "Plaza Central, Ciudad", "456789123"},
+            {"P005", "Muebles Deluxe", "contacto@mueblesdeluxe.com", "Zona Industrial, Ciudad", "159753468"}
+        };
+
+        // Llenar la tabla con los datos
+        for (Object[] fila : datos) {
+            modelo.addRow(fila);
+        }
+    }
     /**
      * @param args the command line arguments
      */

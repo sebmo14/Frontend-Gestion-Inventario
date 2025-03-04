@@ -4,6 +4,9 @@
  */
 package vistas;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MI PC
@@ -16,6 +19,7 @@ public class VistaHistorialVentas extends javax.swing.JFrame {
     public VistaHistorialVentas() {
         initComponents();
         setLocationRelativeTo(this);
+        llenarTablaHistorialVentas(jTable1);
     }
 
     /**
@@ -54,10 +58,7 @@ public class VistaHistorialVentas extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
@@ -144,7 +145,23 @@ public class VistaHistorialVentas extends javax.swing.JFrame {
         vr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+    public static void llenarTablaHistorialVentas(JTable tabla) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 
+        // Datos quemados
+        Object[][] datos = {
+            {"V001", "Juan Pérez", "Laptop", "1", "3500.00", "2024-03-01"},
+            {"V002", "María López", "Camiseta", "3", "77.97", "2024-03-02"},
+            {"V003", "Carlos Díaz", "Manzanas", "10", "35.00", "2024-03-03"},
+            {"V004", "Ana Torres", "Muñeca", "2", "31.50", "2024-03-04"},
+            {"V005", "Pedro Gómez", "Silla Gamer", "1", "120.00", "2024-03-05"}
+        };
+
+        // Llenar la tabla con los datos
+        for (Object[] fila : datos) {
+            modelo.addRow(fila);
+        }
+    }
     /**
      * @param args the command line arguments
      */

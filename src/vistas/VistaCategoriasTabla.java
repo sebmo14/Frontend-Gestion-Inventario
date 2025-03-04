@@ -4,6 +4,9 @@
  */
 package vistas;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MI PC
@@ -16,6 +19,7 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
     public VistaCategoriasTabla() {
         initComponents();
         setLocationRelativeTo(this);
+        llenarTablaCategorias(jTable1);
     }
 
     /**
@@ -54,15 +58,20 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Categoria", "ID", "Fecha de Creacion"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         btnInicio.setBackground(new java.awt.Color(60, 83, 151));
@@ -178,6 +187,25 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
                 new VistaCategoriasTabla().setVisible(true);
             }
         });
+    }
+    
+    
+    public static void llenarTablaCategorias(JTable tabla) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+
+        // Datos quemados
+        Object[][] datos = {
+            {"Electrónica", "101", "2023-05-10"},
+            {"Ropa", "102", "2022-08-15"},
+            {"Alimentos", "103", "2024-01-05"},
+            {"Juguetes", "104", "2021-12-20"},
+            {"Muebles", "105", "2023-03-30"}
+        };
+
+        // Llenar la tabla con los datos
+        for (Object[] fila : datos) {
+            modelo.addRow(fila);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,6 +4,9 @@
  */
 package vistas;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MI PC
@@ -16,6 +19,7 @@ public class VistaGestionProductos extends javax.swing.JFrame {
     public VistaGestionProductos() {
         initComponents();
         setLocationRelativeTo(this);
+        llenarTablaProductos(tblProductos);
     }
 
     /**
@@ -120,13 +124,10 @@ public class VistaGestionProductos extends javax.swing.JFrame {
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Producto", "Categoria", "Precio"
             }
         ));
         jScrollPane1.setViewportView(tblProductos);
@@ -269,7 +270,24 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
+    
+    public static void llenarTablaProductos(JTable tabla) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 
+        // Datos quemados
+        Object[][] datos = {
+            {"201", "Laptop", "Electrónica", "1700000.00"},
+            {"202", "Camiseta", "Ropa", "40000.00"},
+            {"203", "Manzanas", "Alimentos", "3500.00"},
+            {"204", "Muñeca", "Juguetes", "300000.00"},
+            {"205", "Silla Gamer", "Muebles", "1200000.00"}
+        };
+
+        // Llenar la tabla con los datos
+        for (Object[] fila : datos) {
+            modelo.addRow(fila);
+        }
+    }
     /**
      * @param args the command line arguments
      */

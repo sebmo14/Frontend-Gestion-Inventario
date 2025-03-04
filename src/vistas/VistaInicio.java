@@ -4,6 +4,9 @@
  */
 package vistas;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MI PC
@@ -16,6 +19,7 @@ public class VistaInicio extends javax.swing.JFrame {
     public VistaInicio() {
         initComponents();
         setLocationRelativeTo(this);
+        llenarTablaBajoStock(jTable1);
     }
 
     /**
@@ -146,13 +150,10 @@ public class VistaInicio extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Producto", "Categoria", "Cantidad"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -252,12 +253,11 @@ public class VistaInicio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnProveedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCategorias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnProveedores, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVentas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCategorias, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnReportes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -349,7 +349,23 @@ public class VistaInicio extends javax.swing.JFrame {
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInfoActionPerformed
+    public static void llenarTablaBajoStock(JTable tabla) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 
+        // Datos quemados (ID, Nombre, Categoría, Stock)
+        Object[][] datos = {
+            {"201", "Laptop", "Electrónica", "5"},
+            {"203", "Manzanas", "Alimentos", "3"},
+            {"204", "Muñeca", "Juguetes", "7"},
+            {"206", "Teclado Mecánico", "Electrónica", "2"},
+            {"207", "Zapatos Deportivos", "Ropa", "6"}
+        };
+
+        // Llenar la tabla con los datos
+        for (Object[] fila : datos) {
+            modelo.addRow(fila);
+        }
+    }
     /**
      * @param args the command line arguments
      */
