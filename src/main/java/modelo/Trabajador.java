@@ -1,5 +1,5 @@
 
-package Modelo;
+package modelo;
 
 import java.util.UUID;
 
@@ -34,8 +34,54 @@ public class Trabajador {
     public Trabajador() {
          this.id = UUID.randomUUID().toString();
     }
-    
-    
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
 
     public double getSalario() {
         return salario;
@@ -56,7 +102,13 @@ public class Trabajador {
     @Override
     public String toString() {
         return "Trabajador{" +
-                "salario=" + salario +
+                "nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", edad=" + edad +
+                ", correo='" + correo + '\'' +
+                ", id='" + id + '\'' +
+                ", contraseña='" + contraseña + '\'' +
+                ", salario=" + salario +
                 ", añosExpe=" + añosExpe +
                 '}';
     }

@@ -8,6 +8,7 @@ package ApiService;
  *
  * @author MI PC
  */
+import modelo.Trabajador;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -17,7 +18,23 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+
+import java.util.List;
+
 public interface TrabajadorApiService {
-    
+    @GET("/api/trabajadores")
+    Call<List<Trabajador>> getAllTrabajadores();
+
+    @GET("/api/trabajadores/{id}")
+    Call<Trabajador> getTrabajadorById(@Path("id") String id);
+
+    @POST("/api/trabajadores")
+    Call<Trabajador> createTrabajador(@Body Trabajador trabajador);
+
+    @PUT("/api/trabajadores/{id}")
+    Call<Trabajador> updateTrabajador(@Path("id") String id, @Body Trabajador trabajador);
+
+    @DELETE("/api/trabajadores/{id}")
+    Call<Void> deleteTrabajador(@Path("id") String id);
     
 }

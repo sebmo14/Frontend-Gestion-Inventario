@@ -5,7 +5,12 @@
 package ClienteHttp;
 
 import ApiService.TrabajadorApiService;
+
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
+
+import modelo.Trabajador;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -27,6 +32,71 @@ public class TrabajadorClienteHttp {
 
         apiService = retrofit.create(TrabajadorApiService.class);
     }
-    
-    
+
+    private static void listarTodosTrabajadores() {
+        try {
+            Response<List<Trabajador>> response = apiService.getAllTrabajadores().execute();
+            if (response.isSuccessful()) {
+                List<Trabajador> trabajadores = response.body();
+                trabajadores.forEach(trabajador -> System.out.println(trabajador.toString()));
+            } else {
+                System.out.println("Error: " + response.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void buscarTrabajadorPorId(Trabajador trabajador) {
+        try {
+            Response<Trabajador> response = apiService.getTrabajadorById(trabajador.getId()).execute();
+            if (response.isSuccessful()) {
+                System.out.println(response.body());
+            } else {
+                System.out.println("Trabajador no encontrado: " + response.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void crearTrabajador(Trabajador trabajador) {
+        try {
+            Response<Trabajador> response = apiService.createTrabajador(trabajador).execute();
+            if (response.isSuccessful()) {
+                System.out.println("Trabajador creado: " + response.body());
+            } else {
+                System.out.println("Error al crear Trabajador: " + response.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void actualizarTrabajador(Trabajador trabajador) {
+        try {
+            Response<Trabajador> response = apiService.updateTrabajador(trabajador.getId(), trabajador).execute();
+            if (response.isSuccessful()) {
+                System.out.println("Trabajador actualizado: " + response.body());
+            } else {
+                System.out.println("Error al actualizar Trabajador: " + response.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void eliminarTrabajador(Trabajador trabajador) {
+        try {
+            Response<Void> response = apiService.deleteTrabajador(trabajador.getId()).execute();
+            if (response.isSuccessful()) {
+                System.out.println("Trabajador eliminado exitosamente");
+            } else {
+                System.out.println("Error al eliminar trabajador: " + response.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
