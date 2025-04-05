@@ -2,18 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modelo;
+package Modelo;
 
-/**
- *
- * @author MI PC
- */
+import java.util.UUID;
+
+
 public class Proveedor {
-    String Id, Nombre, Email, Direccion;
+    String id, Nombre, Email, Direccion;
     int numeroTlf;
 
-    public Proveedor(String Id, String Nombre, String Email, String Direccion, int numeroTlf) {
-        this.Id = Id;
+    public Proveedor() {
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public Proveedor(String Nombre, String Email, String Direccion, int numeroTlf) {
+        this.id = UUID.randomUUID().toString();
         this.Nombre = Nombre;
         this.Email = Email;
         this.Direccion = Direccion;
@@ -21,11 +24,11 @@ public class Proveedor {
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(String Id) {
-        this.Id = Id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -59,8 +62,15 @@ public class Proveedor {
     public void setNumeroTlf(int numeroTlf) {
         this.numeroTlf = numeroTlf;
     }
-    
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Proveedor{" +
+                "id='" + id + '\'' +
+                ", Nombre='" + Nombre + '\'' +
+                ", Email='" + Email + '\'' +
+                ", Direccion='" + Direccion + '\'' +
+                ", numeroTlf=" + numeroTlf +
+                '}';
+    }
 }

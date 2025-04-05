@@ -1,28 +1,31 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package modelo;
+package Modelo;
+
+import java.util.UUID;
+
 public class Producto {
-    int Id;
+    String id;
     String nombre, descripcion;
     Categoria categoria;
     double precio;
 
-    public Producto(int Id, String nombre, String descripcion, Categoria categoria, double precio) {
-        this.Id = Id;
+    public Producto() {
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public Producto(String nombre, String descripcion, Categoria categoria, double precio) {
+        this.id = UUID.randomUUID().toString();
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.precio = precio;
     }
 
-    public int getId() {
-        return Id;
+    public String getId() {
+        return id;
     }
 
-    public void setId (int Id) {
-        this.Id = Id;
+    public void setId(String id) {
+        id = id;
     }
 
     public String getNombre() {
@@ -55,6 +58,17 @@ public class Producto {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", categoria=" + categoria +
+                ", precio=" + precio +
+                '}';
     }
 }
     

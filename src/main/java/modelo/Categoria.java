@@ -2,20 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modelo;
+package Modelo;
 
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Categoria {
 
     String nombre, descripcion;
-    int Id;
+    String id;
     LocalDate fechaCreacion;
 
-    public Categoria(String nombre, int Id) {
+    public Categoria() {
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public Categoria(String nombre, String descripcion, LocalDate fechaCreacion) {
         this.nombre = nombre;
-        this.Id = Id;
+        this.descripcion = descripcion;
+        this.id = UUID.randomUUID().toString();
+        this.fechaCreacion = fechaCreacion;
     }
 
     public String getNombre() {
@@ -26,12 +33,12 @@ public class Categoria {
         this.nombre = nombre;
     }
 
-    public int getId() {
-        return Id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescripcion() {
@@ -49,7 +56,14 @@ public class Categoria {
     public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", id=" + id +
+                ", fechaCreacion=" + fechaCreacion +
+                '}';
+    }
 }
