@@ -10,11 +10,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+import DTO.LoginRequest;
 import modelo.Trabajador;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
+
+import javax.swing.*;
 
 /**
  *
@@ -99,4 +103,18 @@ public class TrabajadorClienteHttp {
         }
     }
 
+    public static boolean login(LoginRequest loginRequest) {
+        try {
+            Response<Trabajador> response = apiService.loginTrabajador(loginRequest).execute();
+            if (response.isSuccessful()) {
+                JOptionPane.showMessageDialog(null, "Se ha iniciado sesion con exito");
+                return true;
+            }else {
+                JOptionPane.showMessageDialog(null, "Error al iniciar sesion");
+                return false;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

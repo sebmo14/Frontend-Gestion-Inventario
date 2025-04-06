@@ -84,9 +84,9 @@ public class CategoriaClienteHttp {
         }
     }
 
-    public static void eliminarCategoria(Categoria categoria) {
+    public static void eliminarCategoria(String id) {
         try {
-            Response<Void> response = apiService.deleteCategoria(categoria.getId()).execute();
+            Response<Void> response = apiService.deleteCategoria(id).execute();
             if (response.isSuccessful()) {
                 System.out.println("Categoria eliminado exitosamente");
             } else {

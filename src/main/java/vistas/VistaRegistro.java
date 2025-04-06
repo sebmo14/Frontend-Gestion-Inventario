@@ -5,6 +5,7 @@
 package vistas;
 
 import ClienteHttp.TrabajadorClienteHttp;
+import javax.swing.JOptionPane;
 import modelo.Trabajador;
 
 /**
@@ -20,6 +21,7 @@ public class VistaRegistro extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         clienteTrabajador = new TrabajadorClienteHttp();
+        limpiarCampos();
     }
 
     /**
@@ -235,6 +237,10 @@ public class VistaRegistro extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
+        if (verificarVacios()) {
+            JOptionPane.showMessageDialog(null, "Por favor llenar todos los campos");
+            return;
+        }
         String nombre = txtNombre.getText();
         String apellidos = txtApellidos.getText();
         int edad = Integer.parseInt(txtEdad.getText());
@@ -245,8 +251,31 @@ public class VistaRegistro extends javax.swing.JFrame {
         Trabajador trabajador = new Trabajador(nombre, apellidos, edad, correo, contra, salario, añosExp);
         
         clienteTrabajador.crearTrabajador(trabajador);
+        JOptionPane.showMessageDialog(null, "Se ha Registrado correctamente. Ahora puede Iniciar Sesion");
+        limpiarCampos();
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
+    private void limpiarCampos(){
+        txtApellidos.setText(null);
+        txtAñoExp.setText(null);
+        txtContra.setText(null);
+        txtCorreo.setText(null);
+        txtEdad.setText(null);
+        txtNombre.setText(null);
+        txtSalario.setText(null);
+    }
+    
+    private boolean verificarVacios(){
+        if(txtApellidos.getText().trim().isEmpty()
+                ||txtAñoExp.getText().trim().isEmpty()
+                ||txtContra.getText().trim().isEmpty()
+                ||txtCorreo.getText().trim().isEmpty()
+                ||txtEdad.getText().trim().isEmpty()
+                ||txtNombre.getText().trim().isEmpty()
+                ||txtSalario.getText().trim().isEmpty()){
+            return true;
+        }
+        return false;
+    }
     /**
      * @param args the command line arguments
      */

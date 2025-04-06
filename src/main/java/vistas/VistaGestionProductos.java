@@ -4,6 +4,7 @@
  */
 package vistas;
 
+import ClienteHttp.ProductoClienteHttp;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  * @author MI PC
  */
 public class VistaGestionProductos extends javax.swing.JFrame {
-
+    private ProductoClienteHttp clienteProducto;
     /**
      * Creates new form VistaProductos
      */
@@ -20,6 +21,8 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         llenarTablaProductos(tblProductos);
+        clienteProducto = new ProductoClienteHttp();
+        limpiarCampos();
     }
 
     /**
@@ -244,7 +247,8 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         String nombre = txtNombre.getText();
         String descripcion = txtDescripcion.getText();
         double precio = Double.parseDouble(txtPrecio.getText());
-        String categoria = cbxCategoria.getSelectedItem().toString();
+       
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
     
     public static void llenarTablaProductos(JTable tabla) {
@@ -263,6 +267,12 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         for (Object[] fila : datos) {
             modelo.addRow(fila);
         }
+    }
+    
+    private void limpiarCampos(){
+        txtNombre.setText(null);
+        txtDescripcion.setText(null);
+        txtPrecio.setText(null);
     }
     /**
      * @param args the command line arguments
