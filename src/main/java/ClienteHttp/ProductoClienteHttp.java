@@ -38,18 +38,20 @@ public class ProductoClienteHttp {
         apiService = retrofit.create(ProductoApiService.class);
     }
 
-    public static void listarTodosProductos() {
+    public static List<Producto> listarTodosProductos() {
         try {
             Response<List<Producto>> response = apiService.getAllProductos().execute();
             if (response.isSuccessful()) {
                 List<Producto> productos = response.body();
                 productos.forEach(producto -> System.out.println(producto.toString()));
+                return productos;
             } else {
                 System.out.println("Error: " + response.code());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public static Producto buscarProductoPorId(String id) {
