@@ -5,9 +5,11 @@
 package vistas;
 
 import ClienteHttp.ProveedorClienteHttp;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.Proveedor;
 
 /**
  *
@@ -21,8 +23,8 @@ public class VistaProveedores extends javax.swing.JFrame {
     public VistaProveedores() {
         initComponents();
         setLocationRelativeTo(this);
-        llenarTablaProveedores(jTable1);
         clienteproveedor = new ProveedorClienteHttp();
+        cargarTabla(tblProveedores);
     }
 
     /**
@@ -37,7 +39,7 @@ public class VistaProveedores extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProveedores = new javax.swing.JTable();
         btnGestionPro = new javax.swing.JButton();
         btnInicio = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -61,7 +63,7 @@ public class VistaProveedores extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proveedores", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -69,7 +71,7 @@ public class VistaProveedores extends javax.swing.JFrame {
                 "ID", "Nombre", "Correo", "Direccion", "Numero"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProveedores);
 
         btnGestionPro.setBackground(new java.awt.Color(60, 83, 151));
         btnGestionPro.setForeground(new java.awt.Color(255, 255, 255));
@@ -183,6 +185,7 @@ public class VistaProveedores extends javax.swing.JFrame {
         // TODO add your handling code here:
         String idEliminar = JOptionPane.showInputDialog("Ingrese el Id del proveedor que desea eliminar");
         clienteproveedor.eliminarProveedor(idEliminar);
+        cargarTabla(tblProveedores);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -196,22 +199,31 @@ public class VistaProveedores extends javax.swing.JFrame {
         
         clienteproveedor.actualizarProveedor(idEditar, nombre, email, direccion, numTlf);
         JOptionPane.showMessageDialog(null, "Se ha edita correctamente");
+        cargarTabla(tblProveedores);
     }//GEN-LAST:event_btnEditarActionPerformed
-    public static void llenarTablaProveedores(JTable tabla) {
-        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+    public void cargarTabla(JTable jTable) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Email");
+        modelo.addColumn("Dirección");
+        modelo.addColumn("Teléfono");
 
-        // Datos quemados
-        Object[][] datos = {
-            {"P001", "Tech Corp", "contacto@techcorp.com", "Calle 123, Ciudad", "123456789"},
-            {"P002", "Moda Express", "info@modaexpress.com", "Avenida 45, Ciudad", "987654321"},
-            {"P003", "Super Frutas", "ventas@superfrutas.com", "Carrera 10, Ciudad", "321654987"},
-            {"P004", "Juguetón", "soporte@jugueton.com", "Plaza Central, Ciudad", "456789123"},
-            {"P005", "Muebles Deluxe", "contacto@mueblesdeluxe.com", "Zona Industrial, Ciudad", "159753468"}
-        };
+        List<Proveedor> proveedores = ProveedorClienteHttp.listarTodosProveedores();
 
-        // Llenar la tabla con los datos
-        for (Object[] fila : datos) {
-            modelo.addRow(fila);
+        if (proveedores != null) {
+            for (Proveedor p : proveedores) {
+                modelo.addRow(new Object[]{
+                    p.getId(),
+                    p.getNombre(),
+                    p.getEmail(),
+                    p.getDireccion(),
+                    p.getNumeroTlf()
+                });
+            }
+            tblProveedores.setModel(modelo);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar los proveedores");
         }
     }
     /**
@@ -257,6 +269,6 @@ public class VistaProveedores extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblProveedores;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,6 +6,7 @@ package vistas;
 
 import ClienteHttp.TrabajadorClienteHttp;
 import DTO.LoginRequest;
+import modelo.Trabajador;
 
 /**
  *
@@ -171,20 +172,20 @@ public class VistaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        // TODO add your handling code here:
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {
         String email = txtCorreo.getText();
         String password = txtContra.getText();
         LoginRequest login = new LoginRequest(email, password);
-        
-        if (clienteTrabajador.login(login)) {
+
+        Trabajador trabajador = clienteTrabajador.login(login);
+
+        if (trabajador != null) {
             limpiarCampos();
             VistaInicio vi = new VistaInicio();
             vi.setVisible(true);
             this.dispose();
         }
-        
-    }//GEN-LAST:event_btnIniciarSesionActionPerformed
+    }                                                
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
         // TODO add your handling code here:
