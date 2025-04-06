@@ -5,28 +5,34 @@
 package ClienteHttp;
 
 import ApiService.CategoriaApiService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import modelo.Categoria;
 import modelo.Trabajador;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import utilidades.LocalDateAdapter;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author MI PC
  */
 public class CategoriaClienteHttp {
+    Gson gson = new GsonBuilder().registerTypeAdapter(java.time.LocalDate.class, new LocalDateAdapter()).create();
     private static final String BASE_URL = "http://localhost:8080";
     private static CategoriaApiService apiService;
 
     public CategoriaClienteHttp() {
         Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
 
         apiService = retrofit.create(CategoriaApiService.class);
     }
@@ -71,8 +77,11 @@ public class CategoriaClienteHttp {
         }
     }
 
-    public static void actualizarCategoria(Categoria categoria) {
+    public static void actualizarCategoria(String id, String nombre, String descripcion) {
         try {
+            Categoria categoria = new Categoria(nombre, descripcion, LocalDate.MIN);
+            categoria.setId(id);
+            
             Response<Categoria> response = apiService.updateCategoria(categoria.getId(), categoria).execute();
             if (response.isSuccessful()) {
                 System.out.println("Categoria actualizado: " + response.body());

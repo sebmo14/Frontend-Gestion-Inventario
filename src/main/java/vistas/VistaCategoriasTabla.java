@@ -212,10 +212,10 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        String nombre = JOptionPane.showInputDialog("Ingrese el nombre de la categoria que desea editar");
+        String idEditar = JOptionPane.showInputDialog("Ingrese el id de la categoria que desea editar");
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre de la categoria");
         String descripcion = JOptionPane.showInputDialog("Ingrese la descripcion que desea cambiar");
-        Categoria categoria = new Categoria(nombre, descripcion, LocalDate.now());
-        clienteCategoria.actualizarCategoria(categoria);
+        clienteCategoria.actualizarCategoria(idEditar, nombre, descripcion);
         JOptionPane.showMessageDialog(null, "Se ha editado correctamente");
     }//GEN-LAST:event_btnEditarActionPerformed
 
