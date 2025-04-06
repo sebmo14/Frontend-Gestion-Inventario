@@ -193,6 +193,7 @@ public class VistaCategorias extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (verificarVacios()) {
             JOptionPane.showMessageDialog(null, "Por favor rellenar todos los campos");
+            return;
         }
         String nombre = txtNombre.getText();
         String descripcion = txtDescripcion.getText();

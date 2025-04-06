@@ -103,18 +103,17 @@ public class TrabajadorClienteHttp {
         }
     }
 
-    public static boolean login(LoginRequest loginRequest) {
+    public static Trabajador login(LoginRequest login) {
         try {
-            Response<Trabajador> response = apiService.loginTrabajador(loginRequest).execute();
+            Response<Trabajador> response = apiService.loginTrabajador(login).execute();
             if (response.isSuccessful()) {
-                JOptionPane.showMessageDialog(null, "Se ha iniciado sesion con exito");
-                return true;
-            }else {
-                JOptionPane.showMessageDialog(null, "Error al iniciar sesion");
-                return false;
+                return response.body();  // Devuelve el trabajador logueado
+            } else {
+                JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }

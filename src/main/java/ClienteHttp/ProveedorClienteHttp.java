@@ -33,18 +33,18 @@ public class ProveedorClienteHttp {
         apiService = retrofit.create(ProveedorApiService.class);
     }
 
-    public static void listarTodosProveedores() {
+    public static List<Proveedor> listarTodosProveedores() {
         try {
             Response<List<Proveedor>> response = apiService.getAllProveedores().execute();
             if (response.isSuccessful()) {
-                List<Proveedor> proveedores = response.body();
-                proveedores.forEach(proveedor -> System.out.println(proveedor.toString()));
+                return response.body();
             } else {
                 System.out.println("Error: " + response.code());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public static void buscarProveedorPorId(Proveedor proveedor) {
