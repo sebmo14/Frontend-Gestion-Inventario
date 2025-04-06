@@ -8,6 +8,7 @@ package ApiService;
  *
  * @author MI PC
  */
+import DTO.LoginRequest;
 import modelo.Trabajador;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -36,5 +37,8 @@ public interface TrabajadorApiService {
 
     @DELETE("/api/trabajadores/{id}")
     Call<Void> deleteTrabajador(@Path("id") String id);
+
+    @POST("/api/trabajadores/login")
+    Call<Trabajador> loginTrabajador(@Body LoginRequest loginRequest);
     
 }

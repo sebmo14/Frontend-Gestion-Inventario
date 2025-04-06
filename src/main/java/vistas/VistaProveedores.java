@@ -195,6 +195,7 @@ public class VistaProveedores extends javax.swing.JFrame {
         int numTlf = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de telefono"));
         
         clienteproveedor.actualizarProveedor(idEditar, nombre, email, direccion, numTlf);
+        JOptionPane.showMessageDialog(null, "Se ha edita correctamente");
     }//GEN-LAST:event_btnEditarActionPerformed
     public static void llenarTablaProveedores(JTable tabla) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();

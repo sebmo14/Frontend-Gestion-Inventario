@@ -22,6 +22,7 @@ public class VistaGestionProvee extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         clienteproveedor = new ProveedorClienteHttp();
+        limpiarCampos();
     }
 
     /**
@@ -228,9 +229,10 @@ public class VistaGestionProvee extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        try {
-            
-        } catch (Exception e) {
+        
+        if (verificarVacios()) {
+            JOptionPane.showMessageDialog(null, "Por favor rellenar todos los campos");
+            return;
         }
         try {
         String nombre = txtNombre.getText();
@@ -240,12 +242,29 @@ public class VistaGestionProvee extends javax.swing.JFrame {
         
         Proveedor proveedor = new Proveedor(nombre, email, direccion, telefono);
         clienteproveedor.crearProveedor(proveedor);
+        JOptionPane.showMessageDialog(null, "Se ha creado el proveedor con exito");
+        limpiarCampos();
         } catch (CampoVacioExcepcion ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
         
     }//GEN-LAST:event_btnAgregarActionPerformed
-
+    private void limpiarCampos(){
+        txtNombre.setText(null);
+        txtDireccion.setText(null);
+        txtEmail.setText(null);
+        txtTelefono.setText(null);
+    }
+    
+    private boolean verificarVacios(){
+        if (txtDireccion.getText().trim().isEmpty()
+                ||txtEmail.getText().trim().isEmpty()
+                ||txtNombre.getText().trim().isEmpty()
+                ||txtTelefono.getText().trim().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
     /**
      * @param args the command line arguments
      */

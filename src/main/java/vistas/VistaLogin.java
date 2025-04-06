@@ -4,18 +4,23 @@
  */
 package vistas;
 
+import ClienteHttp.TrabajadorClienteHttp;
+import DTO.LoginRequest;
+
 /**
  *
  * @author MI PC
  */
 public class VistaLogin extends javax.swing.JFrame {
-
+    private TrabajadorClienteHttp clienteTrabajador;
     /**
      * Creates new form VistaLogin
      */
     public VistaLogin() {
         initComponents();
         setLocationRelativeTo(this);
+        clienteTrabajador = new TrabajadorClienteHttp();
+        limpiarCampos();
     }
 
     /**
@@ -30,8 +35,8 @@ public class VistaLogin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
+        txtContra = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btnRegistro = new javax.swing.JButton();
         btnIniciarSesion = new javax.swing.JButton();
@@ -90,11 +95,11 @@ public class VistaLogin extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField2))
+                                .addComponent(txtContra))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(53, 53, 53)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnIniciarSesion)
@@ -117,11 +122,11 @@ public class VistaLogin extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
                         .addComponent(btnIniciarSesion))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -168,9 +173,17 @@ public class VistaLogin extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         // TODO add your handling code here:
-        VistaInicio vi = new VistaInicio();
-        vi.setVisible(true);
-        this.dispose();
+        String email = txtCorreo.getText();
+        String password = txtContra.getText();
+        LoginRequest login = new LoginRequest(email, password);
+        
+        if (clienteTrabajador.login(login)) {
+            limpiarCampos();
+            VistaInicio vi = new VistaInicio();
+            vi.setVisible(true);
+            this.dispose();
+        }
+        
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
@@ -179,7 +192,10 @@ public class VistaLogin extends javax.swing.JFrame {
         vr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegistroActionPerformed
-
+    private void limpiarCampos(){
+        txtCorreo.setText(null);
+        txtContra.setText(null);
+    }
     /**
      * @param args the command line arguments
      */
@@ -224,7 +240,7 @@ public class VistaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtContra;
+    private javax.swing.JTextField txtCorreo;
     // End of variables declaration//GEN-END:variables
 }
