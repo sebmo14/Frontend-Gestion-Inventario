@@ -16,6 +16,7 @@ import utilidades.LocalDateAdapter;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -37,18 +38,20 @@ public class CategoriaClienteHttp {
         apiService = retrofit.create(CategoriaApiService.class);
     }
 
-    public static void listarTodosCategorias() {
+    public static ArrayList<Categoria> listarTodosCategorias() {
         try {
             Response<List<Categoria>> response = apiService.getAllCategorias().execute();
             if (response.isSuccessful()) {
-                List<Categoria> categorias = response.body();
+                ArrayList<Categoria> categorias = (ArrayList <Categoria>)response.body();
                 categorias.forEach(categoria -> System.out.println(categoria.toString()));
+                return categorias;
             } else {
                 System.out.println("Error: " + response.code());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     public static void buscarCategoriaPorId(Categoria categoria) {
@@ -117,5 +120,25 @@ public class CategoriaClienteHttp {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Categoria buscarCategoriaPorNombre(String nombre) {
+        try {
+            Categoria categoria = new Categoria();
+            Response<List<Categoria>> response = apiService.buscarCategorias(nombre).execute();
+            List<Categoria> categorias = response.body();
+            if (response.isSuccessful()) {
+                for (Categoria categoriaL : categorias) {
+                    categoria = categoriaL;
+
+                }
+                return categoria;
+            } else {
+                System.out.println("Error al buscar categorias: " + response.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

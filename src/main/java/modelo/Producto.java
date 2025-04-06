@@ -52,7 +52,7 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public double getPrecio() {
+        public double getPrecio() {
         return precio;
     }
 

@@ -4,8 +4,14 @@
  */
 package vistas;
 
+import ClienteHttp.CategoriaClienteHttp;
 import ClienteHttp.ProductoClienteHttp;
-import javax.swing.JTable;
+import java.util.List;
+import javax.swing.*;
+
+import modelo.Categoria;
+import modelo.Producto;
+
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,15 +19,20 @@ import javax.swing.table.DefaultTableModel;
  * @author MI PC
  */
 public class VistaGestionProductos extends javax.swing.JFrame {
-    private ProductoClienteHttp clienteProducto;
+
+    private CategoriaClienteHttp categoriaClienteHttp;
+    private ProductoClienteHttp productoClienteHttp;
+
     /**
      * Creates new form VistaProductos
      */
     public VistaGestionProductos() {
         initComponents();
         setLocationRelativeTo(this);
+        categoriaClienteHttp = new CategoriaClienteHttp();
+        productoClienteHttp = new ProductoClienteHttp();
         llenarTablaProductos(tblProductos);
-        clienteProducto = new ProductoClienteHttp();
+        llenarComboConNombres(cbxCategoria, categoriaClienteHttp.listarTodosCategorias());
         limpiarCampos();
     }
 
@@ -107,11 +118,21 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/eliminarBoton.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setBackground(new java.awt.Color(60, 83, 151));
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/edit-svgrepo-com (1).png"))); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         cbxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -141,28 +162,28 @@ public class VistaGestionProductos extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(36, 36, 36)
-                            .addComponent(btnAgregar)
-                            .addGap(69, 69, 69)
-                            .addComponent(btnEliminar))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel3))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5)))
-                            .addGap(24, 24, 24)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnAgregar)
+                                .addGap(69, 69, 69)
+                                .addComponent(btnEliminar))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel5)))
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(116, 116, 116)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -247,10 +268,102 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         String nombre = txtNombre.getText();
         String descripcion = txtDescripcion.getText();
         double precio = Double.parseDouble(txtPrecio.getText());
-       
-        
+        String nombreCategoria = cbxCategoria.getSelectedItem().toString();
+        Categoria categoria = categoriaClienteHttp.buscarCategoriaPorNombre(nombreCategoria);
+
+        Producto producto = new Producto(nombre, descripcion, categoria, precio);
+        productoClienteHttp.crearProducto(producto);
+
+
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+        String idEliminar = JOptionPane.showInputDialog("Ingrese el Id del producto que desea eliminar");
+        productoClienteHttp.eliminarProducto(idEliminar);
+        JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        String idEditar = JOptionPane.showInputDialog("Ingrese el Id del producto que desea editar");
+    if (idEditar == null || idEditar.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Debe ingresar un ID válido.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
     
+    // Verificar que el producto existe antes de intentar editar
+    Producto productoExistente = productoClienteHttp.buscarProductoPorId(idEditar);
+    if (productoExistente == null) {
+        JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el ID: " + idEditar,
+                "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Mostrar los valores actuales como valor por defecto en cada campo
+    JOptionPane.showMessageDialog(null, "Si no deseas editar algún campo, déjalo en blanco o presiona Cancelar.");
+    
+    // Mostrar el valor actual como sugerencia y procesarlo adecuadamente
+    String nombre = JOptionPane.showInputDialog("Ingrese el nombre (actual: " + productoExistente.getNombre() + ")");
+    // Si presiona Cancelar o deja vacío dejar el valor cmo estaba
+    if (nombre == null) {
+        nombre = ""; 
+    }
+    
+    String descripcion = JOptionPane.showInputDialog("Ingrese la descripción (actual: " + productoExistente.getDescripcion() + ")");
+    if (descripcion == null) {
+        descripcion = "";
+    }
+    
+    Categoria categoria = null; // Valor default si no se ingresa la categoriaa
+    String nombreCategoria = JOptionPane.showInputDialog("Ingrese el nombre de la categoría (actual: " + 
+                              (productoExistente.getCategoria() != null ? productoExistente.getCategoria().getNombre() : "ninguna") + ")");
+    
+    if (nombreCategoria != null && !nombreCategoria.isBlank()) {
+        categoria = categoriaClienteHttp.buscarCategoriaPorNombre(nombreCategoria);
+        if (categoria == null) {
+            JOptionPane.showMessageDialog(null, "Categoría no encontrada, se mantendrá la categoría actual.",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    Double precio = null; // Usamos null para indicar que se mantendrá el precio actual
+    String precioStr = JOptionPane.showInputDialog("Ingrese el precio (actual: " + productoExistente.getPrecio() + ")");
+    
+    if (precioStr != null && !precioStr.isBlank()) {
+        try {
+            precio = Double.parseDouble(precioStr);
+            if (precio < 0) {
+                JOptionPane.showMessageDialog(null, "El precio no puede ser negativo, se ignorará el cambio.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                precio = null;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Precio inválido, se mantendrá el precio actual.");
+        }
+    }
+    
+    // Agregamos logs para depuración
+    System.out.println("Enviando actualizaciones:");
+    System.out.println("ID: " + idEditar);
+    System.out.println("Nombre: " + (nombre.isEmpty() ? "[mantener actual]" : nombre));
+    System.out.println("Descripción: " + (descripcion.isEmpty() ? "[mantener actual]" : descripcion));
+    System.out.println("Categoría: " + (categoria == null ? "[mantener actual]" : categoria.getNombre()));
+    System.out.println("Precio: " + (precio == null ? "[mantener actual]" : precio));
+    
+    boolean exito = productoClienteHttp.actualizarProducto(idEditar, nombre, descripcion, categoria, precio);
+    
+    if (exito) {
+        JOptionPane.showMessageDialog(null, "Producto editado correctamente.");
+    } else {
+        JOptionPane.showMessageDialog(null, "Hubo un problema al editar el producto. Verifica los datos e intenta nuevamente.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
     public static void llenarTablaProductos(JTable tabla) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 
@@ -268,12 +381,20 @@ public class VistaGestionProductos extends javax.swing.JFrame {
             modelo.addRow(fila);
         }
     }
-    
-    private void limpiarCampos(){
+
+    private void limpiarCampos() {
         txtNombre.setText(null);
         txtDescripcion.setText(null);
         txtPrecio.setText(null);
     }
+
+    public void llenarComboConNombres(JComboBox<String> combo, List<Categoria> categorias) {
+        combo.removeAllItems(); // Limpia la combo
+        for (Categoria cat : categorias) {
+            combo.addItem(cat.getNombre()); // Agrega solo el nombre
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
