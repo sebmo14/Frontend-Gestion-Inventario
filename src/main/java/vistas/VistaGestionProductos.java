@@ -6,6 +6,7 @@ package vistas;
 
 import ClienteHttp.CategoriaClienteHttp;
 import ClienteHttp.ProductoClienteHttp;
+import ClienteHttp.ProveedorClienteHttp;
 import java.util.List;
 import javax.swing.*;
 
@@ -13,6 +14,7 @@ import modelo.Categoria;
 import modelo.Producto;
 
 import javax.swing.table.DefaultTableModel;
+import modelo.Proveedor;
 
 /**
  *
@@ -31,7 +33,7 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         categoriaClienteHttp = new CategoriaClienteHttp();
         productoClienteHttp = new ProductoClienteHttp();
-        llenarTablaProductos(tblProductos);
+        cargarTabla(tblProductos);
         llenarComboConNombres(cbxCategoria, categoriaClienteHttp.listarTodosCategorias());
         limpiarCampos();
     }
@@ -273,6 +275,8 @@ public class VistaGestionProductos extends javax.swing.JFrame {
 
         Producto producto = new Producto(nombre, descripcion, categoria, precio);
         productoClienteHttp.crearProducto(producto);
+        cargarTabla(tblProductos);
+        limpiarCampos();
 
 
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -282,6 +286,7 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         String idEliminar = JOptionPane.showInputDialog("Ingrese el Id del producto que desea eliminar");
         productoClienteHttp.eliminarProducto(idEliminar);
         JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+        cargarTabla(tblProductos);
 
 
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -345,7 +350,7 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         }
     }
     
-    // Agregamos logs para depuración
+    // DEPURACION
     System.out.println("Enviando actualizaciones:");
     System.out.println("ID: " + idEditar);
     System.out.println("Nombre: " + (nombre.isEmpty() ? "[mantener actual]" : nombre));
@@ -357,30 +362,13 @@ public class VistaGestionProductos extends javax.swing.JFrame {
     
     if (exito) {
         JOptionPane.showMessageDialog(null, "Producto editado correctamente.");
+        cargarTabla(tblProductos);
     } else {
         JOptionPane.showMessageDialog(null, "Hubo un problema al editar el producto. Verifica los datos e intenta nuevamente.",
                 "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     }//GEN-LAST:event_btnEditarActionPerformed
-
-    public static void llenarTablaProductos(JTable tabla) {
-        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-
-        // Datos quemados
-        Object[][] datos = {
-            {"201", "Laptop", "Electrónica", "1700000.00"},
-            {"202", "Camiseta", "Ropa", "40000.00"},
-            {"203", "Manzanas", "Alimentos", "3500.00"},
-            {"204", "Muñeca", "Juguetes", "300000.00"},
-            {"205", "Silla Gamer", "Muebles", "1200000.00"}
-        };
-
-        // Llenar la tabla con los datos
-        for (Object[] fila : datos) {
-            modelo.addRow(fila);
-        }
-    }
 
     private void limpiarCampos() {
         txtNombre.setText(null);
@@ -392,6 +380,31 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         combo.removeAllItems(); // Limpia la combo
         for (Categoria cat : categorias) {
             combo.addItem(cat.getNombre()); // Agrega solo el nombre
+        }
+    }
+    public void cargarTabla(JTable jTable) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Descripcion");
+        modelo.addColumn("Categoria");
+        modelo.addColumn("Precio");
+
+        List<Producto> productos = productoClienteHttp.listarTodosProductos();
+
+        if (productos != null) {
+            for (Producto p : productos) {
+                modelo.addRow(new Object[]{
+                    p.getId(),
+                    p.getNombre(),
+                    p.getDescripcion(),
+                    p.getCategoria().getNombre(),
+                    p.getPrecio()
+                });
+            }
+            tblProductos.setModel(modelo);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar los proveedores");
         }
     }
 

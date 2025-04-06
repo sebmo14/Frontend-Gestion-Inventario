@@ -6,6 +6,7 @@ package vistas;
 
 import ClienteHttp.CategoriaClienteHttp;
 import java.time.LocalDate;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -23,8 +24,9 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
     public VistaCategoriasTabla() {
         initComponents();
         setLocationRelativeTo(this);
-        llenarTablaCategorias(jTable1);
+        
         clienteCategoria = new CategoriaClienteHttp();
+        cargarTabla(tblCategorias);
     }
 
     /**
@@ -40,7 +42,7 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCategorias = new javax.swing.JTable();
         btnInicio = new javax.swing.JButton();
         btnGestionCate = new javax.swing.JButton();
         btnEliminar1 = new javax.swing.JButton();
@@ -74,7 +76,7 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -90,7 +92,7 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCategorias);
 
         btnInicio.setBackground(new java.awt.Color(60, 83, 151));
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
@@ -207,7 +209,9 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
         // TODO add your handling code here:
         String idEliminar = JOptionPane.showInputDialog("Ingrese el Id de la categoria que desea eliminar");
         clienteCategoria.eliminarCategoria(idEliminar);
+        cargarTabla(tblCategorias);
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente");
+        
     }//GEN-LAST:event_btnEliminar1ActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -216,6 +220,7 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre de la categoria");
         String descripcion = JOptionPane.showInputDialog("Ingrese la descripcion que desea cambiar");
         clienteCategoria.actualizarCategoria(idEditar, nombre, descripcion);
+        cargarTabla(tblCategorias);
         JOptionPane.showMessageDialog(null, "Se ha editado correctamente");
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -255,21 +260,27 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
     }
     
     
-    public static void llenarTablaCategorias(JTable tabla) {
-        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+    public void cargarTabla(JTable jTable) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Descripcion");
+        modelo.addColumn("Fecha de Creacion");
 
-        // Datos quemados
-        Object[][] datos = {
-            {"Electrónica", "101", "2023-05-10"},
-            {"Ropa", "102", "2022-08-15"},
-            {"Alimentos", "103", "2024-01-05"},
-            {"Juguetes", "104", "2021-12-20"},
-            {"Muebles", "105", "2023-03-30"}
-        };
+        List<Categoria> categorias = clienteCategoria.listarTodosCategorias();
 
-        // Llenar la tabla con los datos
-        for (Object[] fila : datos) {
-            modelo.addRow(fila);
+        if (categorias != null) {
+            for (Categoria c : categorias) {
+                modelo.addRow(new Object[]{
+                    c.getId(),
+                    c.getNombre(),
+                    c.getDescripcion(),
+                    c.getFechaCreacion().toString()
+                });
+            }
+            tblCategorias.setModel(modelo);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudieron cargar los proveedores");
         }
     }
 
@@ -282,6 +293,6 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblCategorias;
     // End of variables declaration//GEN-END:variables
 }
