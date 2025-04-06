@@ -33,7 +33,7 @@ public class TrabajadorClienteHttp {
         apiService = retrofit.create(TrabajadorApiService.class);
     }
 
-    private static void listarTodosTrabajadores() {
+    public static void listarTodosTrabajadores() {
         try {
             Response<List<Trabajador>> response = apiService.getAllTrabajadores().execute();
             if (response.isSuccessful()) {
@@ -47,7 +47,7 @@ public class TrabajadorClienteHttp {
         }
     }
 
-    private static void buscarTrabajadorPorId(Trabajador trabajador) {
+    public static void buscarTrabajadorPorId(Trabajador trabajador) {
         try {
             Response<Trabajador> response = apiService.getTrabajadorById(trabajador.getId()).execute();
             if (response.isSuccessful()) {
@@ -60,7 +60,7 @@ public class TrabajadorClienteHttp {
         }
     }
 
-    private static void crearTrabajador(Trabajador trabajador) {
+    public static void crearTrabajador(Trabajador trabajador) {
         try {
             Response<Trabajador> response = apiService.createTrabajador(trabajador).execute();
             if (response.isSuccessful()) {
@@ -73,7 +73,7 @@ public class TrabajadorClienteHttp {
         }
     }
 
-    private static void actualizarTrabajador(Trabajador trabajador) {
+    public static void actualizarTrabajador(Trabajador trabajador) {
         try {
             Response<Trabajador> response = apiService.updateTrabajador(trabajador.getId(), trabajador).execute();
             if (response.isSuccessful()) {
@@ -86,7 +86,7 @@ public class TrabajadorClienteHttp {
         }
     }
 
-    private static void eliminarTrabajador(Trabajador trabajador) {
+    public static void eliminarTrabajador(Trabajador trabajador) {
         try {
             Response<Void> response = apiService.deleteTrabajador(trabajador.getId()).execute();
             if (response.isSuccessful()) {

@@ -31,7 +31,7 @@ public class ReporteClienteHttp {
         apiService = retrofit.create(ReporteApiService.class);
     }
 
-    private static void listarTodosReportes() {
+    public static void listarTodosReportes() {
         try {
             Response<List<Reporte>> response = apiService.getAllReportes().execute();
             if (response.isSuccessful()) {
@@ -45,7 +45,7 @@ public class ReporteClienteHttp {
         }
     }
 
-    private static void buscarReportePorId(Reporte reporte) {
+    public static void buscarReportePorId(Reporte reporte) {
         try {
             Response<Reporte> response = apiService.getReporteById(reporte.getId()).execute();
             if (response.isSuccessful()) {
@@ -58,7 +58,7 @@ public class ReporteClienteHttp {
         }
     }
 
-    private static void crearReporte(Reporte reporte) {
+    public static void crearReporte(Reporte reporte) {
         try {
             Response<Reporte> response = apiService.createReporte(reporte).execute();
             if (response.isSuccessful()) {
@@ -71,7 +71,7 @@ public class ReporteClienteHttp {
         }
     }
 
-    private static void actualizarReporte(Reporte reporte) {
+    public static void actualizarReporte(Reporte reporte) {
         try {
             Response<Reporte> response = apiService.updateReporte(reporte.getId(), reporte).execute();
             if (response.isSuccessful()) {
@@ -84,7 +84,7 @@ public class ReporteClienteHttp {
         }
     }
 
-    private static void eliminarReporte(Reporte reporte) {
+    public static void eliminarReporte(Reporte reporte) {
         try {
             Response<Void> response = apiService.deleteReporte(reporte.getId()).execute();
             if (response.isSuccessful()) {

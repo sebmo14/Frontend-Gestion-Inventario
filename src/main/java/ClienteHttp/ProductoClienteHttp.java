@@ -31,7 +31,7 @@ public class ProductoClienteHttp {
         apiService = retrofit.create(ProductoApiService.class);
     }
 
-    private static void listarTodosProductos() {
+    public static void listarTodosProductos() {
         try {
             Response<List<Producto>> response = apiService.getAllProductos().execute();
             if (response.isSuccessful()) {
@@ -45,7 +45,7 @@ public class ProductoClienteHttp {
         }
     }
 
-    private static void buscarProductoPorId(Producto producto) {
+    public static void buscarProductoPorId(Producto producto) {
         try {
             Response<Producto> response = apiService.getProductoById(producto.getId()).execute();
             if (response.isSuccessful()) {
@@ -58,7 +58,7 @@ public class ProductoClienteHttp {
         }
     }
 
-    private static void crearProducto(Producto producto) {
+    public static void crearProducto(Producto producto) {
         try {
             Response<Producto> response = apiService.createProducto(producto).execute();
             if (response.isSuccessful()) {
@@ -71,7 +71,7 @@ public class ProductoClienteHttp {
         }
     }
 
-    private static void actualizarProducto(Producto producto) {
+    public static void actualizarProducto(Producto producto) {
         try {
             Response<Producto> response = apiService.updateProducto(producto.getId(), producto).execute();
             if (response.isSuccessful()) {
@@ -84,7 +84,7 @@ public class ProductoClienteHttp {
         }
     }
 
-    private static void eliminarProducto(Producto producto) {
+    public static void eliminarProducto(Producto producto) {
         try {
             Response<Void> response = apiService.deleteProducto(producto.getId()).execute();
             if (response.isSuccessful()) {
@@ -96,4 +96,5 @@ public class ProductoClienteHttp {
             e.printStackTrace();
         }
     }
+
 }

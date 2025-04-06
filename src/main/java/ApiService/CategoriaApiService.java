@@ -30,4 +30,9 @@ public interface CategoriaApiService {
 
     @DELETE("/api/categorias/{id}")
     Call<Void> deleteCategoria(@Path("id") String id);
+
+    @GET("/api/categorias/buscar")
+    Call<List<Categoria>> buscarCategorias(
+            @Query("nombre") String nombre
+    );
 }

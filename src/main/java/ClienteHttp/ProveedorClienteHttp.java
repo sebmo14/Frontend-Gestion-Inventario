@@ -6,13 +6,15 @@ package ClienteHttp;
 
 import ApiService.ProveedorApiService;
 import modelo.Proveedor;
-import modelo.Trabajador;
+import excepciones.CampoVacioExcepcion;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,7 +33,7 @@ public class ProveedorClienteHttp {
         apiService = retrofit.create(ProveedorApiService.class);
     }
 
-    private static void listarTodosProveedores() {
+    public static void listarTodosProveedores() {
         try {
             Response<List<Proveedor>> response = apiService.getAllProveedores().execute();
             if (response.isSuccessful()) {
@@ -45,7 +47,7 @@ public class ProveedorClienteHttp {
         }
     }
 
-    private static void buscarProveedorPorId(Proveedor proveedor) {
+    public static void buscarProveedorPorId(Proveedor proveedor) {
         try {
             Response<Proveedor> response = apiService.getProveedorById(proveedor.getId()).execute();
             if (response.isSuccessful()) {
@@ -58,7 +60,7 @@ public class ProveedorClienteHttp {
         }
     }
 
-    private static void crearProveedor(Proveedor proveedor) {
+    public static void crearProveedor(Proveedor proveedor) throws CampoVacioExcepcion{ 
         try {
             Response<Proveedor> response = apiService.createProveedor(proveedor).execute();
             if (response.isSuccessful()) {
@@ -71,8 +73,11 @@ public class ProveedorClienteHttp {
         }
     }
 
-    private static void actualizarProveedor(Proveedor proveedor) {
+    public static void actualizarProveedor(String id, String nombre, String email, String direccion, int numTlf) {
         try {
+            Proveedor proveedor =  new Proveedor(nombre, email, direccion, numTlf);
+            proveedor.setId(id);
+
             Response<Proveedor> response = apiService.updateProveedor(proveedor.getId(), proveedor).execute();
             if (response.isSuccessful()) {
                 System.out.println("Proveedor actualizado: " + response.body());
@@ -84,12 +89,14 @@ public class ProveedorClienteHttp {
         }
     }
 
-    private static void eliminarProveedor(Proveedor proveedor) {
+    public static void eliminarProveedor(String id) {
         try {
-            Response<Void> response = apiService.deleteProveedor(proveedor.getId()).execute();
+            Response<Void> response = apiService.deleteProveedor(id).execute();
             if (response.isSuccessful()) {
+                JOptionPane.showMessageDialog(null, "Se ha eliminado con exito");
                 System.out.println("Proveedor eliminado exitosamente");
             } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar proveedor");
                 System.out.println("Error al eliminar proveedor: " + response.code());
             }
         } catch (IOException e) {

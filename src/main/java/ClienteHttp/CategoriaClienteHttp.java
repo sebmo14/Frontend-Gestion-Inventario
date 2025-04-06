@@ -31,7 +31,7 @@ public class CategoriaClienteHttp {
         apiService = retrofit.create(CategoriaApiService.class);
     }
 
-    private static void listarTodosCategorias() {
+    public static void listarTodosCategorias() {
         try {
             Response<List<Categoria>> response = apiService.getAllCategorias().execute();
             if (response.isSuccessful()) {
@@ -45,7 +45,7 @@ public class CategoriaClienteHttp {
         }
     }
 
-    private static void buscarCategoriaPorId(Categoria categoria) {
+    public static void buscarCategoriaPorId(Categoria categoria) {
         try {
             Response<Categoria> response = apiService.getCategoriaById(categoria.getId()).execute();
             if (response.isSuccessful()) {
@@ -58,7 +58,7 @@ public class CategoriaClienteHttp {
         }
     }
 
-    private static void crearCategoria(Categoria categoria) {
+    public static void crearCategoria(Categoria categoria) {
         try {
             Response<Categoria> response = apiService.createCategoria(categoria).execute();
             if (response.isSuccessful()) {
@@ -71,7 +71,7 @@ public class CategoriaClienteHttp {
         }
     }
 
-    private static void actualizarCategoria(Categoria categoria) {
+    public static void actualizarCategoria(Categoria categoria) {
         try {
             Response<Categoria> response = apiService.updateCategoria(categoria.getId(), categoria).execute();
             if (response.isSuccessful()) {
@@ -84,13 +84,26 @@ public class CategoriaClienteHttp {
         }
     }
 
-    private static void eliminarCategoria(Categoria categoria) {
+    public static void eliminarCategoria(Categoria categoria) {
         try {
             Response<Void> response = apiService.deleteCategoria(categoria.getId()).execute();
             if (response.isSuccessful()) {
                 System.out.println("Categoria eliminado exitosamente");
             } else {
                 System.out.println("Error al eliminar categoria: " + response.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void buscarCategoriaPorFiltros(String nombre) {
+        try {
+            Response<List<Categoria>> response = apiService.buscarCategorias(nombre).execute();
+            if (response.isSuccessful()) {
+                response.body().forEach(categoria -> System.out.println(categoria.toString()));
+            } else {
+                System.out.println("Error al buscar categorias: " + response.code());
             }
         } catch (IOException e) {
             e.printStackTrace();
