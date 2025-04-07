@@ -6,6 +6,7 @@ package vistas;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.Trabajador;
 
 /**
  *
@@ -16,9 +17,11 @@ public class VistaHistorialVentas extends javax.swing.JFrame {
     /**
      * Creates new form VistaHistorialVentas
      */
-    public VistaHistorialVentas() {
+    private Trabajador trabajador;
+    public VistaHistorialVentas(Trabajador trabajadorExistente) {
         initComponents();
         setLocationRelativeTo(this);
+        this.trabajador = trabajadorExistente;
         llenarTablaHistorialVentas(jTable1);
     }
 
@@ -134,14 +137,14 @@ public class VistaHistorialVentas extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        VistaInicio vi = new VistaInicio();
+        VistaInicio vi = new VistaInicio(this.trabajador);
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        VistaRegistroVenta vr = new VistaRegistroVenta();
+        VistaRegistroVenta vr = new VistaRegistroVenta(this.trabajador);
         vr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -190,9 +193,10 @@ public class VistaHistorialVentas extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Trabajador trabajador = new Trabajador();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaHistorialVentas().setVisible(true);
+                new VistaHistorialVentas(trabajador).setVisible(true);
             }
         });
     }

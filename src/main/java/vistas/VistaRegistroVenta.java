@@ -4,6 +4,8 @@
  */
 package vistas;
 
+import modelo.Trabajador;
+
 /**
  *
  * @author MI PC
@@ -13,8 +15,10 @@ public class VistaRegistroVenta extends javax.swing.JFrame {
     /**
      * Creates new form VistaVentas
      */
-    public VistaRegistroVenta() {
+    private Trabajador trabajador;
+    public VistaRegistroVenta(Trabajador trabajadorExistente) {
         initComponents();
+        this.trabajador = trabajadorExistente;
         setLocationRelativeTo(this);
     }
 
@@ -215,14 +219,14 @@ public class VistaRegistroVenta extends javax.swing.JFrame {
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
         // TODO add your handling code here:
-        VistaHistorialVentas vh = new VistaHistorialVentas();
+        VistaHistorialVentas vh = new VistaHistorialVentas(this.trabajador);
         vh.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         // TODO add your handling code here:
-        VistaInicio vi = new VistaInicio();
+        VistaInicio vi = new VistaInicio(this.trabajador);
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
@@ -256,9 +260,10 @@ public class VistaRegistroVenta extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Trabajador trabajador = new Trabajador();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaRegistroVenta().setVisible(true);
+                new VistaRegistroVenta(trabajador).setVisible(true);
             }
         });
     }

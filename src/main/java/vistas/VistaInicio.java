@@ -6,6 +6,7 @@ package vistas;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import modelo.Trabajador;
 
 /**
  *
@@ -16,10 +17,12 @@ public class VistaInicio extends javax.swing.JFrame {
     /**
      * Creates new form VistaInicio
      */
-    public VistaInicio() {
+    private Trabajador trabajador;
+    public VistaInicio(Trabajador trabajadorExistente) {
         initComponents();
         setLocationRelativeTo(this);
         llenarTablaBajoStock(jTable1);
+        this.trabajador = trabajadorExistente;
     }
 
     /**
@@ -323,42 +326,42 @@ public class VistaInicio extends javax.swing.JFrame {
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
         // TODO add your handling code here:
-        VistaHistorialVentas vh = new VistaHistorialVentas();
+        VistaHistorialVentas vh = new VistaHistorialVentas(this.trabajador);
         vh.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         // TODO add your handling code here:
-        VistaGestionProductos vp = new VistaGestionProductos();
+        VistaGestionProductos vp = new VistaGestionProductos(this.trabajador);
         vp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
         // TODO add your handling code here:
-        VistaCategoriasTabla vt = new VistaCategoriasTabla();
+        VistaCategoriasTabla vt = new VistaCategoriasTabla(this.trabajador);
         vt.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCategoriasActionPerformed
 
     private void btnProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedoresActionPerformed
         // TODO add your handling code here:
-        VistaProveedores vp = new VistaProveedores();
+        VistaProveedores vp = new VistaProveedores(this.trabajador);
         vp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProveedoresActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         // TODO add your handling code here:
-        VistaReportes vr = new VistaReportes();
+        VistaReportes vr = new VistaReportes(this.trabajador);
         vr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
         // TODO add your handling code here:
-        VistaInformacion vi = new VistaInformacion();
+        VistaInformacion vi = new VistaInformacion(this.trabajador);
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInfoActionPerformed
@@ -412,11 +415,12 @@ public class VistaInicio extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(VistaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        Trabajador trabajador = new Trabajador();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaInicio().setVisible(true);
+                new VistaInicio(trabajador).setVisible(true);
             }
         });
     }

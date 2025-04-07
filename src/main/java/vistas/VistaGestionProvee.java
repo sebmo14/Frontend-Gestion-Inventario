@@ -8,6 +8,7 @@ import modelo.Proveedor;
 import ClienteHttp.ProveedorClienteHttp;
 import excepciones.CampoVacioExcepcion;
 import javax.swing.JOptionPane;
+import modelo.Trabajador;
 
 /**
  *
@@ -18,10 +19,12 @@ public class VistaGestionProvee extends javax.swing.JFrame {
     /**
      * Creates new form VistaGestionProvee
      */
-    public VistaGestionProvee() {
+    private Trabajador trabajador;
+    public VistaGestionProvee(Trabajador trabajadorExistente) {
         initComponents();
         setLocationRelativeTo(this);
         clienteproveedor = new ProveedorClienteHttp();
+        this.trabajador = trabajadorExistente;
         limpiarCampos();
     }
 
@@ -215,14 +218,14 @@ public class VistaGestionProvee extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         // TODO add your handling code here:
-        VistaInicio vi = new VistaInicio();
+        VistaInicio vi = new VistaInicio(this.trabajador);
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
         // TODO add your handling code here:
-        VistaProveedores vp = new VistaProveedores();
+        VistaProveedores vp = new VistaProveedores(this.trabajador);
         vp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHistorialActionPerformed
@@ -293,9 +296,10 @@ public class VistaGestionProvee extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Trabajador trabajador = new Trabajador();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaGestionProvee().setVisible(true);
+                new VistaGestionProvee(trabajador).setVisible(true);
             }
         });
     }

@@ -15,6 +15,7 @@ import modelo.Producto;
 
 import javax.swing.table.DefaultTableModel;
 import modelo.Proveedor;
+import modelo.Trabajador;
 
 /**
  *
@@ -28,11 +29,13 @@ public class VistaGestionProductos extends javax.swing.JFrame {
     /**
      * Creates new form VistaProductos
      */
-    public VistaGestionProductos() {
+    private Trabajador trabajador;
+    public VistaGestionProductos(Trabajador trabajadorExistente) {
         initComponents();
         setLocationRelativeTo(this);
         categoriaClienteHttp = new CategoriaClienteHttp();
         productoClienteHttp = new ProductoClienteHttp();
+        this.trabajador = trabajadorExistente;
         cargarTabla(tblProductos);
         llenarComboConNombres(cbxCategoria, categoriaClienteHttp.listarTodosCategorias());
         limpiarCampos();
@@ -260,7 +263,7 @@ public class VistaGestionProductos extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         // TODO add your handling code here:
-        VistaInicio vi = new VistaInicio();
+        VistaInicio vi = new VistaInicio(this.trabajador);
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
@@ -466,9 +469,10 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Trabajador trabajador = new Trabajador();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaGestionProductos().setVisible(true);
+                new VistaGestionProductos(trabajador).setVisible(true);
             }
         });
     }

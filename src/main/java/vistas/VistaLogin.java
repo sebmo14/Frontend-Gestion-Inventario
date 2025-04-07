@@ -14,6 +14,7 @@ import modelo.Trabajador;
  */
 public class VistaLogin extends javax.swing.JFrame {
     private TrabajadorClienteHttp clienteTrabajador;
+    
     /**
      * Creates new form VistaLogin
      */
@@ -181,7 +182,7 @@ public class VistaLogin extends javax.swing.JFrame {
 
         if (trabajador != null) {
             limpiarCampos();
-            VistaInicio vi = new VistaInicio();
+            VistaInicio vi = new VistaInicio(trabajador);
             vi.setVisible(true);
             this.dispose();
         }
@@ -223,6 +224,7 @@ public class VistaLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(VistaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

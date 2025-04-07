@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
+import modelo.Trabajador;
 
 /**
  *
@@ -21,10 +22,11 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
     /**
      * Creates new form VistaCategoriasTabla
      */
-    public VistaCategoriasTabla() {
+    private Trabajador trabajador;
+    public VistaCategoriasTabla(Trabajador trabajadorExistente) {
         initComponents();
         setLocationRelativeTo(this);
-        
+        this.trabajador = trabajadorExistente;
         clienteCategoria = new CategoriaClienteHttp();
         cargarTabla(tblCategorias);
     }
@@ -189,14 +191,14 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         // TODO add your handling code here:
-        VistaInicio vi = new VistaInicio();
+        VistaInicio vi = new VistaInicio(this.trabajador);
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnGestionCateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionCateActionPerformed
         // TODO add your handling code here:
-        VistaCategorias vc = new VistaCategorias();
+        VistaCategorias vc = new VistaCategorias(this.trabajador);
         vc.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGestionCateActionPerformed
@@ -252,9 +254,10 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Trabajador trabajador = new Trabajador();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaCategoriasTabla().setVisible(true);
+                new VistaCategoriasTabla(trabajador).setVisible(true);
             }
         });
     }

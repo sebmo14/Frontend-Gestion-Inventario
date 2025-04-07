@@ -8,20 +8,25 @@ import ClienteHttp.CategoriaClienteHttp;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import modelo.Categoria;
+import modelo.Trabajador;
 
 /**
  *
  * @author MI PC
  */
 public class VistaCategorias extends javax.swing.JFrame {
+    
+    
     private CategoriaClienteHttp clienteCategoria;
     /**
      * Creates new form VistaCategorias
      */
-    public VistaCategorias() {
+    private Trabajador trabajador;
+    public VistaCategorias(Trabajador trabajadorExistente) {
         initComponents();
         setLocationRelativeTo(this);
         clienteCategoria = new CategoriaClienteHttp();
+        this.trabajador = trabajadorExistente;
         limpiarCampos();
     }
 
@@ -177,14 +182,14 @@ public class VistaCategorias extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         // TODO add your handling code here:\
-        VistaInicio vi = new VistaInicio();
+        VistaInicio vi = new VistaInicio(this.trabajador);
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnMostrarCateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarCateActionPerformed
         // TODO add your handling code here:
-        VistaCategoriasTabla vt = new VistaCategoriasTabla();
+        VistaCategoriasTabla vt = new VistaCategoriasTabla(this.trabajador);
         vt.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMostrarCateActionPerformed
@@ -243,9 +248,10 @@ public class VistaCategorias extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Trabajador trabajador = new Trabajador();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaCategorias().setVisible(true);
+                new VistaCategorias(trabajador).setVisible(true);
             }
         });
     }

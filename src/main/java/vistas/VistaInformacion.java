@@ -4,6 +4,8 @@
  */
 package vistas;
 
+import modelo.Trabajador;
+
 /**
  *
  * @author MI PC
@@ -13,8 +15,12 @@ public class VistaInformacion extends javax.swing.JFrame {
     /**
      * Creates new form VistaInformacion
      */
-    public VistaInformacion() {
+    private Trabajador trabajador;
+    public VistaInformacion(Trabajador trabajadorExistente) {
         initComponents();
+         this.trabajador = trabajadorExistente;
+         actualizarLabels();
+        
         setLocationRelativeTo(this);
     }
 
@@ -34,10 +40,10 @@ public class VistaInformacion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblId = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblCorreo = new javax.swing.JLabel();
+        lblVentas = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -84,13 +90,13 @@ public class VistaInformacion extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Correo:");
 
-        jLabel5.setText("1289034");
+        lblId.setText("1289034");
 
-        jLabel6.setText("Samuel Morrales");
+        lblNombre.setText("Samuel Morrales");
 
-        jLabel7.setText("SamuelMorrales@ventas.com");
+        lblCorreo.setText("SamuelMorrales@ventas.com");
 
-        jLabel8.setText("74");
+        lblVentas.setText("74");
 
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/person-svgrepo-com (1).png"))); // NOI18N
@@ -109,13 +115,13 @@ public class VistaInformacion extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(lblVentas)
                         .addContainerGap(353, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6))
+                            .addComponent(lblId)
+                            .addComponent(lblCorreo)
+                            .addComponent(lblNombre))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addGap(14, 14, 14))))
@@ -132,19 +138,19 @@ public class VistaInformacion extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel5))
+                            .addComponent(lblId))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel6))
+                            .addComponent(lblNombre))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel7)))
+                            .addComponent(lblCorreo)))
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
+                    .addComponent(lblVentas)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -172,11 +178,16 @@ public class VistaInformacion extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        VistaInicio vi = new VistaInicio();
+        VistaInicio vi = new VistaInicio(this.trabajador);
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    private void actualizarLabels(){
+        lblNombre.setText(this.trabajador.getNombre() + this.trabajador.getApellidos());
+        lblCorreo.setText(this.trabajador.getCorreo());
+        lblId.setText(this.trabajador.getId());
+    }
     /**
      * @param args the command line arguments
      */
@@ -205,9 +216,10 @@ public class VistaInformacion extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Trabajador trabajador = new Trabajador();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaInformacion().setVisible(true);
+                new VistaInformacion(trabajador).setVisible(true);
             }
         });
     }
@@ -218,12 +230,12 @@ public class VistaInformacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblVentas;
     // End of variables declaration//GEN-END:variables
 }

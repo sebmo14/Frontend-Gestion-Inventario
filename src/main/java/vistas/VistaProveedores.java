@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Proveedor;
+import modelo.Trabajador;
 
 /**
  *
@@ -20,10 +21,12 @@ public class VistaProveedores extends javax.swing.JFrame {
     /**
      * Creates new form VistaProveedores
      */
-    public VistaProveedores() {
+    private Trabajador trabajador;
+    public VistaProveedores(Trabajador trabajadorExistente) {
         initComponents();
         setLocationRelativeTo(this);
         clienteproveedor = new ProveedorClienteHttp();
+        this.trabajador = trabajadorExistente;
         cargarTabla(tblProveedores);
     }
 
@@ -169,14 +172,14 @@ public class VistaProveedores extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         // TODO add your handling code here:
-        VistaInicio vi = new VistaInicio();
+        VistaInicio vi = new VistaInicio(this.trabajador);
         vi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnGestionProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionProActionPerformed
         // TODO add your handling code here:
-        VistaGestionProvee vp = new VistaGestionProvee();
+        VistaGestionProvee vp = new VistaGestionProvee(this.trabajador);
         vp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGestionProActionPerformed
@@ -273,9 +276,10 @@ public class VistaProveedores extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Trabajador trabajador = new Trabajador();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaProveedores().setVisible(true);
+                new VistaProveedores(trabajador).setVisible(true);
             }
         });
     }
