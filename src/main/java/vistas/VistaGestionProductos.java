@@ -266,12 +266,32 @@ public class VistaGestionProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-        String nombre = txtNombre.getText();
-        String descripcion = txtDescripcion.getText();
-        double precio = Double.parseDouble(txtPrecio.getText());
+        String nombre = txtNombre.getText().trim();
+        String descripcion = txtDescripcion.getText().trim();
+
+        if (verficarVacios()) {
+            JOptionPane.showMessageDialog(null, "Por favor rellenar todos los campos");
+            return;
+        }
+
+        double precio;
+        try {
+            precio = Double.parseDouble(txtPrecio.getText().trim());
+            if (precio <= 0) {
+                JOptionPane.showMessageDialog(null, "El precio debe ser mayor a 0");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Ingrese un precio válido (número)");
+            return;
+        }
+
         String nombreCategoria = cbxCategoria.getSelectedItem().toString();
         Categoria categoria = categoriaClienteHttp.buscarCategoriaPorNombre(nombreCategoria);
+        if (categoria == null) {
+            JOptionPane.showMessageDialog(null, "Categoría no válida");
+            return;
+        }
 
         Producto producto = new Producto(nombre, descripcion, categoria, precio);
         productoClienteHttp.crearProducto(producto);
@@ -293,80 +313,80 @@ public class VistaGestionProductos extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         String idEditar = JOptionPane.showInputDialog("Ingrese el Id del producto que desea editar");
-    if (idEditar == null || idEditar.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Debe ingresar un ID válido.",
-                "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    
-    // Verificar que el producto existe antes de intentar editar
-    Producto productoExistente = productoClienteHttp.buscarProductoPorId(idEditar);
-    if (productoExistente == null) {
-        JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el ID: " + idEditar,
-                "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    
-    // Mostrar los valores actuales como valor por defecto en cada campo
-    JOptionPane.showMessageDialog(null, "Si no deseas editar algún campo, déjalo en blanco o presiona Cancelar.");
-    
-    // Mostrar el valor actual como sugerencia y procesarlo adecuadamente
-    String nombre = JOptionPane.showInputDialog("Ingrese el nombre (actual: " + productoExistente.getNombre() + ")");
-    // Si presiona Cancelar o deja vacío dejar el valor cmo estaba
-    if (nombre == null) {
-        nombre = ""; 
-    }
-    
-    String descripcion = JOptionPane.showInputDialog("Ingrese la descripción (actual: " + productoExistente.getDescripcion() + ")");
-    if (descripcion == null) {
-        descripcion = "";
-    }
-    
-    Categoria categoria = null; // Valor default si no se ingresa la categoriaa
-    String nombreCategoria = JOptionPane.showInputDialog("Ingrese el nombre de la categoría (actual: " + 
-                              (productoExistente.getCategoria() != null ? productoExistente.getCategoria().getNombre() : "ninguna") + ")");
-    
-    if (nombreCategoria != null && !nombreCategoria.isBlank()) {
-        categoria = categoriaClienteHttp.buscarCategoriaPorNombre(nombreCategoria);
-        if (categoria == null) {
-            JOptionPane.showMessageDialog(null, "Categoría no encontrada, se mantendrá la categoría actual.",
-                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+        if (idEditar == null || idEditar.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un ID válido.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    }
-    
-    Double precio = null; // Usamos null para indicar que se mantendrá el precio actual
-    String precioStr = JOptionPane.showInputDialog("Ingrese el precio (actual: " + productoExistente.getPrecio() + ")");
-    
-    if (precioStr != null && !precioStr.isBlank()) {
-        try {
-            precio = Double.parseDouble(precioStr);
-            if (precio < 0) {
-                JOptionPane.showMessageDialog(null, "El precio no puede ser negativo, se ignorará el cambio.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                precio = null;
+
+        // Verificar que el producto existe antes de intentar editar
+        Producto productoExistente = productoClienteHttp.buscarProductoPorId(idEditar);
+        if (productoExistente == null) {
+            JOptionPane.showMessageDialog(null, "No se encontró ningún producto con el ID: " + idEditar,
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Mostrar los valores actuales como valor por defecto en cada campo
+        JOptionPane.showMessageDialog(null, "Si no deseas editar algún campo, déjalo en blanco o presiona Cancelar.");
+
+        // Mostrar el valor actual como sugerencia y procesarlo adecuadamente
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre (actual: " + productoExistente.getNombre() + ")");
+        // Si presiona Cancelar o deja vacío dejar el valor cmo estaba
+        if (nombre == null) {
+            nombre = "";
+        }
+
+        String descripcion = JOptionPane.showInputDialog("Ingrese la descripción (actual: " + productoExistente.getDescripcion() + ")");
+        if (descripcion == null) {
+            descripcion = "";
+        }
+
+        Categoria categoria = null; // Valor default si no se ingresa la categoriaa
+        String nombreCategoria = JOptionPane.showInputDialog("Ingrese el nombre de la categoría (actual: "
+                + (productoExistente.getCategoria() != null ? productoExistente.getCategoria().getNombre() : "ninguna") + ")");
+
+        if (nombreCategoria != null && !nombreCategoria.isBlank()) {
+            categoria = categoriaClienteHttp.buscarCategoriaPorNombre(nombreCategoria);
+            if (categoria == null) {
+                JOptionPane.showMessageDialog(null, "Categoría no encontrada, se mantendrá la categoría actual.",
+                        "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Precio inválido, se mantendrá el precio actual.");
         }
-    }
-    
-    // DEPURACION
-    System.out.println("Enviando actualizaciones:");
-    System.out.println("ID: " + idEditar);
-    System.out.println("Nombre: " + (nombre.isEmpty() ? "[mantener actual]" : nombre));
-    System.out.println("Descripción: " + (descripcion.isEmpty() ? "[mantener actual]" : descripcion));
-    System.out.println("Categoría: " + (categoria == null ? "[mantener actual]" : categoria.getNombre()));
-    System.out.println("Precio: " + (precio == null ? "[mantener actual]" : precio));
-    
-    boolean exito = productoClienteHttp.actualizarProducto(idEditar, nombre, descripcion, categoria, precio);
-    
-    if (exito) {
-        JOptionPane.showMessageDialog(null, "Producto editado correctamente.");
-        cargarTabla(tblProductos);
-    } else {
-        JOptionPane.showMessageDialog(null, "Hubo un problema al editar el producto. Verifica los datos e intenta nuevamente.",
-                "Error", JOptionPane.ERROR_MESSAGE);
-    }
+
+        Double precio = null; // Usamos null para indicar que se mantendrá el precio actual
+        String precioStr = JOptionPane.showInputDialog("Ingrese el precio (actual: " + productoExistente.getPrecio() + ")");
+
+        if (precioStr != null && !precioStr.isBlank()) {
+            try {
+                precio = Double.parseDouble(precioStr);
+                if (precio < 0) {
+                    JOptionPane.showMessageDialog(null, "El precio no puede ser negativo, se ignorará el cambio.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    precio = null;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Precio inválido, se mantendrá el precio actual.");
+            }
+        }
+
+        // DEPURACION
+        System.out.println("Enviando actualizaciones:");
+        System.out.println("ID: " + idEditar);
+        System.out.println("Nombre: " + (nombre.isEmpty() ? "[mantener actual]" : nombre));
+        System.out.println("Descripción: " + (descripcion.isEmpty() ? "[mantener actual]" : descripcion));
+        System.out.println("Categoría: " + (categoria == null ? "[mantener actual]" : categoria.getNombre()));
+        System.out.println("Precio: " + (precio == null ? "[mantener actual]" : precio));
+
+        boolean exito = productoClienteHttp.actualizarProducto(idEditar, nombre, descripcion, categoria, precio);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(null, "Producto editado correctamente.");
+            cargarTabla(tblProductos);
+        } else {
+            JOptionPane.showMessageDialog(null, "Hubo un problema al editar el producto. Verifica los datos e intenta nuevamente.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -376,12 +396,21 @@ public class VistaGestionProductos extends javax.swing.JFrame {
         txtPrecio.setText(null);
     }
 
+    private boolean verficarVacios() {
+        if (txtNombre.getText().isEmpty() || txtDescripcion.getText().isEmpty() || txtPrecio.getText().trim().isEmpty() || cbxCategoria.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            return true;
+        }
+        return false;
+    }
+
     public void llenarComboConNombres(JComboBox<String> combo, List<Categoria> categorias) {
         combo.removeAllItems(); // Limpia la combo
         for (Categoria cat : categorias) {
             combo.addItem(cat.getNombre()); // Agrega solo el nombre
         }
     }
+
     public void cargarTabla(JTable jTable) {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");

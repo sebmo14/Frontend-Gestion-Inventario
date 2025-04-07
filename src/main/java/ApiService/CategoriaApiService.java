@@ -10,6 +10,8 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 import java.util.List;
+import modelo.Producto;
+import okhttp3.ResponseBody;
 
 /**
  *
@@ -27,6 +29,9 @@ public interface CategoriaApiService {
 
     @PUT("/api/categorias/{id}")
     Call<Categoria> updateCategoria(@Path("id") String id, @Body Categoria categoria);
+    
+    @PUT("/api/categorias/{id}")
+    Call<ResponseBody> updateCategoriaRaw(@Path("id") String id, @Body Categoria categoria);
 
     @DELETE("/api/categorias/{id}")
     Call<Void> deleteCategoria(@Path("id") String id);

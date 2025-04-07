@@ -25,6 +25,7 @@ import java.util.Set;
  * @author MI PC
  */
 public class CategoriaClienteHttp {
+
     Gson gson = new GsonBuilder().registerTypeAdapter(java.time.LocalDate.class, new LocalDateAdapter()).create();
     private static final String BASE_URL = "http://localhost:8080";
     private static CategoriaApiService apiService;
@@ -42,7 +43,7 @@ public class CategoriaClienteHttp {
         try {
             Response<List<Categoria>> response = apiService.getAllCategorias().execute();
             if (response.isSuccessful()) {
-                ArrayList<Categoria> categorias = (ArrayList <Categoria>)response.body();
+                ArrayList<Categoria> categorias = (ArrayList<Categoria>) response.body();
                 categorias.forEach(categoria -> System.out.println(categoria.toString()));
                 return categorias;
             } else {
@@ -80,19 +81,44 @@ public class CategoriaClienteHttp {
         }
     }
 
-    public static void actualizarCategoria(String id, String nombre, String descripcion) {
+    public static boolean actualizarCategoria(String id, String nombre, String descripcion) {
         try {
-            Categoria categoria = new Categoria(nombre, descripcion, LocalDate.MIN);
-            categoria.setId(id);
-            
-            Response<Categoria> response = apiService.updateCategoria(categoria.getId(), categoria).execute();
-            if (response.isSuccessful()) {
-                System.out.println("Categoria actualizado: " + response.body());
+            Categoria categoria = new Categoria(nombre, descripcion, LocalDate.now());
+            Categoria categoriaOg = buscarCategoriaPorNombre(nombre);
+
+            categoria.setId(categoriaOg.getId());
+            if (nombre != null && !nombre.isEmpty()) {
+                categoria.setNombre(nombre);
             } else {
-                System.out.println("Error al actualizar categoria: " + response.code());
+                categoria.setNombre(categoriaOg.getNombre());
+
             }
-        } catch (IOException e) {
+            if (descripcion != null && !descripcion.isEmpty()) {
+                categoria.setDescripcion(descripcion);
+            } else {
+                categoria.setDescripcion(categoriaOg.getDescripcion());
+
+            }
+
+            try {
+                retrofit2.Call<okhttp3.ResponseBody> call = apiService.updateCategoriaRaw(id, categoria);
+                retrofit2.Response<okhttp3.ResponseBody> response = call.execute();
+
+                if (response.isSuccessful()) {
+                    System.out.println("Categoria actualizado exitosamente");
+                    return true;
+                } else {
+                    System.out.println("Error al actualizar categoria. Código: " + response.code());
+                    return false;
+                }
+            } catch (IOException e) {
+                System.out.println("Error de comunicación con la API: " + e.getMessage());
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error inesperado: " + e.getMessage());
             e.printStackTrace();
+            return false;
         }
     }
 

@@ -21,14 +21,15 @@ import javax.swing.JOptionPane;
  * @author MI PC
  */
 public class ProveedorClienteHttp {
+
     private static final String BASE_URL = "http://localhost:8080";
     private static ProveedorApiService apiService;
 
     public ProveedorClienteHttp() {
         Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         apiService = retrofit.create(ProveedorApiService.class);
     }
@@ -47,20 +48,23 @@ public class ProveedorClienteHttp {
         return null;
     }
 
-    public static void buscarProveedorPorId(Proveedor proveedor) {
+    public static Proveedor buscarProveedorPorId(String id) {
         try {
-            Response<Proveedor> response = apiService.getProveedorById(proveedor.getId()).execute();
+            Response<Proveedor> response = apiService.getProveedorById(id).execute();
+            Proveedor proveedor = response.body();
             if (response.isSuccessful()) {
-                System.out.println(response.body());
+
+                return proveedor;
             } else {
                 System.out.println("Proveedor no encontrado: " + response.code());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    public static void crearProveedor(Proveedor proveedor) throws CampoVacioExcepcion{ 
+    public static void crearProveedor(Proveedor proveedor) throws CampoVacioExcepcion {
         try {
             Response<Proveedor> response = apiService.createProveedor(proveedor).execute();
             if (response.isSuccessful()) {
@@ -73,20 +77,50 @@ public class ProveedorClienteHttp {
         }
     }
 
-    public static void actualizarProveedor(String id, String nombre, String email, String direccion, int numTlf) {
+    public static boolean actualizarProveedor(String id, String nombre, String email, String direccion, int numTlf) {
         try {
-            Proveedor proveedor =  new Proveedor(nombre, email, direccion, numTlf);
+            Proveedor proveedor = new Proveedor(nombre, email, direccion, numTlf);
+            Proveedor proveedorOg = buscarProveedorPorId(id);
+            
             proveedor.setId(id);
+            
+            if (nombre != null && !nombre.isEmpty()) {
+                proveedor.setNombre(nombre);
+            } else {
+                proveedor.setNombre(proveedorOg.getNombre());
+
+            }
+            if (email != null && !email.isEmpty()) {
+                proveedor.setEmail(email);
+            } else {
+                proveedor.setEmail(proveedorOg.getEmail());
+
+            }
+            if (direccion != null && !direccion.isEmpty()) {
+                proveedor.setDireccion(email);
+            } else {
+                proveedor.setDireccion(proveedorOg.getDireccion());
+
+            }
+            if (!(numTlf == 0)) {
+                proveedor.setDireccion(email);
+            } else {
+                proveedor.setNumeroTlf(proveedorOg.getNumeroTlf());
+
+            }
 
             Response<Proveedor> response = apiService.updateProveedor(proveedor.getId(), proveedor).execute();
             if (response.isSuccessful()) {
                 System.out.println("Proveedor actualizado: " + response.body());
+                return true;
             } else {
                 System.out.println("Error al actualizar proveedor: " + response.code());
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public static void eliminarProveedor(String id) {
@@ -103,6 +137,5 @@ public class ProveedorClienteHttp {
             e.printStackTrace();
         }
     }
-    
-    
+
 }

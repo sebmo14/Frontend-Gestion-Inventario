@@ -122,8 +122,6 @@ public class ProductoClienteHttp {
         System.out.println("Enviando producto actualizado: " + productoActualizar);
         
         try {
-            // En lugar de esperar un Producto como respuesta, usamos ResponseBody
-            // para manejar cualquier tipo de respuesta o incluso respuesta vacía
             retrofit2.Call<okhttp3.ResponseBody> call = apiService.updateProductoRaw(id, productoActualizar);
             retrofit2.Response<okhttp3.ResponseBody> response = call.execute();
             

@@ -189,17 +189,36 @@ public class VistaProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-        String idEditar = JOptionPane.showInputDialog("Ingrese el Id del proveedor que desea editar");
-        JOptionPane.showMessageDialog(null, "Si no quiere editar algun campo, dejelo en blanco.");
-        String nombre = JOptionPane.showInputDialog("Ingrese el nombre");
-        String email = JOptionPane.showInputDialog("Ingrese el email");
-        String direccion = JOptionPane.showInputDialog("Ingrese la direccion");
-        int numTlf = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de telefono"));
-        
-        clienteproveedor.actualizarProveedor(idEditar, nombre, email, direccion, numTlf);
-        JOptionPane.showMessageDialog(null, "Se ha edita correctamente");
+       String idEditar = JOptionPane.showInputDialog("Ingrese el Id del proveedor que desea editar");
+    if (idEditar == null || idEditar.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Debe ingresar un ID válido.");
+        return;
+    }
+
+    JOptionPane.showMessageDialog(null, "Si no quiere editar algún campo, déjelo en blanco.");
+
+    String nombre = JOptionPane.showInputDialog("Ingrese el nombre");
+    String email = JOptionPane.showInputDialog("Ingrese el email");
+    String direccion = JOptionPane.showInputDialog("Ingrese la dirección");
+
+    String numTlfStr = JOptionPane.showInputDialog("Ingrese el número de teléfono");
+    int numTlf = 0; // Por defecto, 0 
+
+    if (numTlfStr != null && !numTlfStr.trim().isEmpty()) {
+        try {
+            numTlf = Integer.parseInt(numTlfStr.trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Número de teléfono inválido. Se usará omitirá el cambio.");
+        }
+    }
+
+    boolean exito = clienteproveedor.actualizarProveedor(idEditar, nombre, email, direccion, numTlf);
+    if (exito) {
+        JOptionPane.showMessageDialog(null, "Se ha editado correctamente");
         cargarTabla(tblProveedores);
+    } else {
+        JOptionPane.showMessageDialog(null, "Ocurrió un error al editar el proveedor", "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnEditarActionPerformed
     public void cargarTabla(JTable jTable) {
         DefaultTableModel modelo = new DefaultTableModel();
