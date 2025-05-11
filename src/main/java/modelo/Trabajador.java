@@ -13,7 +13,7 @@ public class Trabajador {
     private String apellidos;
     private int edad;
     private String correo;
-    private String id;
+    private Integer id;
     private String contraseña;
     private double salario;
     private int añosExpe;
@@ -25,15 +25,18 @@ public class Trabajador {
         this.apellidos = apellidos;
         this.edad = edad;
         this.correo = correo;
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         this.contraseña = contraseña;
         this.salario = salario;
         this.añosExpe = añosExpe;
     }
 
     public Trabajador() {
-         this.id = UUID.randomUUID().toString();
     }
+
+    
+
+
 
     public String getNombre() {
         return nombre;
@@ -67,13 +70,15 @@ public class Trabajador {
         this.correo = correo;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
+
+    
 
     public String getContraseña() {
         return contraseña;

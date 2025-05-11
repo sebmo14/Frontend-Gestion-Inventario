@@ -22,22 +22,22 @@ public interface CategoriaApiService {
     Call<List<Categoria>> getAllCategorias();
 
     @GET("/api/categorias/{id}")
-    Call<Categoria> getCategoriaById(@Path("id") String id);
+    Call<Categoria> getCategoriaById(@Path("id") Integer id);
 
     @POST("/api/categorias")
     Call<Categoria> createCategoria(@Body Categoria categoria);
 
     @PUT("/api/categorias/{id}")
-    Call<Categoria> updateCategoria(@Path("id") String id, @Body Categoria categoria);
+    Call<Categoria> updateCategoria(@Path("id") Integer id, @Body Categoria categoria);
     
     @PUT("/api/categorias/{id}")
-    Call<ResponseBody> updateCategoriaRaw(@Path("id") String id, @Body Categoria categoria);
+    Call<ResponseBody> updateCategoriaRaw(@Path("id") Integer id, @Body Categoria categoria);
 
     @DELETE("/api/categorias/{id}")
-    Call<Void> deleteCategoria(@Path("id") String id);
+    Call<Void> deleteCategoria(@Path("id") Integer id);
 
     @GET("/api/categorias/buscar")
-    Call<List<Categoria>> buscarCategorias(
+    Call<Categoria> buscarCategorias(
             @Query("nombre") String nombre
     );
 }

@@ -8,26 +8,27 @@ import java.util.UUID;
 
 
 public class Proveedor {
-    String id, nombre, email, direccion;
+    String  nombre, email, direccion;
+    Integer id;
     int numeroTlf;
 
     public Proveedor() {
-        this.id = UUID.randomUUID().toString();
+        
     }
 
     public Proveedor(String nombre, String email, String direccion, int numeroTlf) {
-        this.id =UUID.randomUUID().toString() ;
+        this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.direccion = direccion;
         this.numeroTlf = numeroTlf;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

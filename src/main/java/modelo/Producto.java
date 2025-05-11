@@ -3,24 +3,24 @@ package modelo;
 import java.util.UUID;
 
 public class Producto {
-    String id;
+    Integer id;
     String nombre, descripcion;
     Categoria categoria;
     double precio;
 
     public Producto() {
-        this.id = UUID.randomUUID().toString();
+        
     }
 
     public Producto(String nombre, String descripcion, Categoria categoria, double precio) {
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.precio = precio;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 

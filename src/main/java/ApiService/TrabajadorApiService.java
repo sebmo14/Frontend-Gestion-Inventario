@@ -27,16 +27,16 @@ public interface TrabajadorApiService {
     Call<List<Trabajador>> getAllTrabajadores();
 
     @GET("/api/trabajadores/{id}")
-    Call<Trabajador> getTrabajadorById(@Path("id") String id);
+    Call<Trabajador> getTrabajadorById(@Path("id") Integer id);
 
     @POST("/api/trabajadores")
     Call<Trabajador> createTrabajador(@Body Trabajador trabajador);
 
     @PUT("/api/trabajadores/{id}")
-    Call<Trabajador> updateTrabajador(@Path("id") String id, @Body Trabajador trabajador);
+    Call<Trabajador> updateTrabajador(@Path("id") Integer id, @Body Trabajador trabajador);
 
     @DELETE("/api/trabajadores/{id}")
-    Call<Void> deleteTrabajador(@Path("id") String id);
+    Call<Void> deleteTrabajador(@Path("id") Integer id);
 
     @POST("/api/trabajadores/login")
     Call<Trabajador> loginTrabajador(@Body LoginRequest loginRequest);

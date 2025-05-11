@@ -48,7 +48,7 @@ public class ProveedorClienteHttp {
         return null;
     }
 
-    public static Proveedor buscarProveedorPorId(String id) {
+    public static Proveedor buscarProveedorPorId(Integer id) {
         try {
             Response<Proveedor> response = apiService.getProveedorById(id).execute();
             Proveedor proveedor = response.body();
@@ -77,7 +77,7 @@ public class ProveedorClienteHttp {
         }
     }
 
-    public static boolean actualizarProveedor(String id, String nombre, String email, String direccion, int numTlf) {
+    public static boolean actualizarProveedor(Integer id, String nombre, String email, String direccion, int numTlf) {
         try {
             Proveedor proveedor = new Proveedor(nombre, email, direccion, numTlf);
             Proveedor proveedorOg = buscarProveedorPorId(id);
@@ -97,7 +97,7 @@ public class ProveedorClienteHttp {
 
             }
             if (direccion != null && !direccion.isEmpty()) {
-                proveedor.setDireccion(email);
+                proveedor.setDireccion(direccion);
             } else {
                 proveedor.setDireccion(proveedorOg.getDireccion());
 
@@ -123,7 +123,7 @@ public class ProveedorClienteHttp {
         return false;
     }
 
-    public static void eliminarProveedor(String id) {
+    public static void eliminarProveedor(Integer id) {
         try {
             Response<Void> response = apiService.deleteProveedor(id).execute();
             if (response.isSuccessful()) {

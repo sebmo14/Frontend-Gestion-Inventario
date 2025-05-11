@@ -306,7 +306,7 @@ public class VistaGestionProductos extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
-        String idEliminar = JOptionPane.showInputDialog("Ingrese el Id del producto que desea eliminar");
+        Integer idEliminar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Id del producto que desea eliminar"));
         productoClienteHttp.eliminarProducto(idEliminar);
         JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
         cargarTabla(tblProductos);
@@ -315,8 +315,8 @@ public class VistaGestionProductos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        String idEditar = JOptionPane.showInputDialog("Ingrese el Id del producto que desea editar");
-        if (idEditar == null || idEditar.trim().isEmpty()) {
+        Integer idEditar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Id del producto que desea editar"));
+        if (idEditar == null) {
             JOptionPane.showMessageDialog(null, "Debe ingresar un ID válido.",
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;

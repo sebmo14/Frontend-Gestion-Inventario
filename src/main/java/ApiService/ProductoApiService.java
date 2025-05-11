@@ -22,17 +22,17 @@ public interface ProductoApiService {
     Call<List<Producto>> getAllProductos();
 
     @GET("/api/productos/{id}")
-    Call<Producto> getProductoById(@Path("id") String id);
+    Call<Producto> getProductoById(@Path("id") Integer id);
 
     @POST("/api/productos")
     Call<Producto> createProducto(@Body Producto producto);
 
     @PUT("/api/productos/{id}")
-    Call<Producto> updateProducto(@Path("id") String id, @Body Producto producto);
+    Call<Producto> updateProducto(@Path("id") Integer id, @Body Producto producto);
 
     @PUT("/api/productos/{id}")
-    Call<ResponseBody> updateProductoRaw(@Path("id") String id, @Body Producto producto);
+    Call<ResponseBody> updateProductoRaw(@Path("id") Integer id, @Body Producto producto);
 
     @DELETE("/api/productos/{id}")
-    Call<Void> deleteProducto(@Path("id") String id);
+    Call<Void> deleteProducto(@Path("id") Integer id);
 }

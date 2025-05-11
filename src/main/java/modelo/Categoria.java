@@ -11,17 +11,17 @@ import java.util.UUID;
 public class Categoria {
 
     String nombre, descripcion;
-    String id;
+    Integer id;
     LocalDate fechaCreacion;
 
     public Categoria() {
-        this.id = UUID.randomUUID().toString();
+       
     }
 
     public Categoria(String nombre, String descripcion, LocalDate fechaCreacion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         this.fechaCreacion = fechaCreacion;
     }
 
@@ -33,11 +33,11 @@ public class Categoria {
         this.nombre = nombre;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

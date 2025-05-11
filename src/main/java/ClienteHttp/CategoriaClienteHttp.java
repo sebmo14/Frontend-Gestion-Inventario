@@ -81,7 +81,7 @@ public class CategoriaClienteHttp {
         }
     }
 
-    public static boolean actualizarCategoria(String id, String nombre, String descripcion) {
+    public static boolean actualizarCategoria(Integer id, String nombre, String descripcion) {
         try {
             Categoria categoria = new Categoria(nombre, descripcion, LocalDate.now());
             Categoria categoriaOg = buscarCategoriaPorNombre(nombre);
@@ -122,7 +122,7 @@ public class CategoriaClienteHttp {
         }
     }
 
-    public static void eliminarCategoria(String id) {
+    public static void eliminarCategoria(Integer id) {
         try {
             Response<Void> response = apiService.deleteCategoria(id).execute();
             if (response.isSuccessful()) {
@@ -135,36 +135,20 @@ public class CategoriaClienteHttp {
         }
     }
 
-    public static void buscarCategoriaPorFiltros(String nombre) {
-        try {
-            Response<List<Categoria>> response = apiService.buscarCategorias(nombre).execute();
-            if (response.isSuccessful()) {
-                response.body().forEach(categoria -> System.out.println(categoria.toString()));
-            } else {
-                System.out.println("Error al buscar categorias: " + response.code());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+   
 
     public static Categoria buscarCategoriaPorNombre(String nombre) {
-        try {
-            Categoria categoria = new Categoria();
-            Response<List<Categoria>> response = apiService.buscarCategorias(nombre).execute();
-            List<Categoria> categorias = response.body();
-            if (response.isSuccessful()) {
-                for (Categoria categoriaL : categorias) {
-                    categoria = categoriaL;
-
-                }
-                return categoria;
-            } else {
-                System.out.println("Error al buscar categorias: " + response.code());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    try {
+        Response<Categoria> response = apiService.buscarCategorias(nombre).execute();
+        if (response.isSuccessful() && response.body() != null) {
+            return response.body();
+        } else {
+            System.out.println("Error al buscar categoría: " + response.code());
         }
-        return null;
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+    return null;
+}
+
 }

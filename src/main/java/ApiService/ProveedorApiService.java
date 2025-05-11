@@ -22,17 +22,17 @@ public interface ProveedorApiService {
     Call<List<Proveedor>> getAllProveedores();
 
     @GET("/api/proveedores/{id}")
-    Call<Proveedor> getProveedorById(@Path("id") String id);
+    Call<Proveedor> getProveedorById(@Path("id") Integer id);
 
     @POST("/api/proveedores")
     Call<Proveedor> createProveedor(@Body Proveedor proveedor);
 
     @PUT("/api/proveedores/{id}")
-    Call<Proveedor> updateProveedor(@Path("id") String id, @Body Proveedor proveedor);
+    Call<Proveedor> updateProveedor(@Path("id") Integer id, @Body Proveedor proveedor);
 
     @PUT("proveedores/{id}")
-    Call<ResponseBody> updateProveedorRaw(@Path("id") String id, @Body Proveedor proveedor);
+    Call<ResponseBody> updateProveedorRaw(@Path("id") Integer id, @Body Proveedor proveedor);
 
     @DELETE("/api/proveedores/{id}")
-    Call<Void> deleteProveedor(@Path("id") String id);
+    Call<Void> deleteProveedor(@Path("id") Integer id);
 }

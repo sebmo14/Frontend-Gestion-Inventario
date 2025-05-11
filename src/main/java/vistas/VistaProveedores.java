@@ -186,18 +186,18 @@ public class VistaProveedores extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        String idEliminar = JOptionPane.showInputDialog("Ingrese el Id del proveedor que desea eliminar");
+        Integer idEliminar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Id del proveedor que desea eliminar"));
         clienteproveedor.eliminarProveedor(idEliminar);
         cargarTabla(tblProveedores);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-       String idEditar = JOptionPane.showInputDialog("Ingrese el Id del proveedor que desea editar");
-    if (idEditar == null || idEditar.trim().isEmpty()) {
+       Integer idEditar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Id del proveedor que desea editar"));
+    if (idEditar == null) {
         JOptionPane.showMessageDialog(null, "Debe ingresar un ID válido.");
         return;
     }
-
+        Proveedor auxProv = ProveedorClienteHttp.buscarProveedorPorId(idEditar);
     JOptionPane.showMessageDialog(null, "Si no quiere editar algún campo, déjelo en blanco.");
 
     String nombre = JOptionPane.showInputDialog("Ingrese el nombre");
@@ -214,7 +214,7 @@ public class VistaProveedores extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Número de teléfono inválido. Se usará omitirá el cambio.");
         }
     }
-
+    
     boolean exito = clienteproveedor.actualizarProveedor(idEditar, nombre, email, direccion, numTlf);
     if (exito) {
         JOptionPane.showMessageDialog(null, "Se ha editado correctamente");

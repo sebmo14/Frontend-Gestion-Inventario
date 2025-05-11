@@ -186,7 +186,7 @@ public class VistaInformacion extends javax.swing.JFrame {
     private void actualizarLabels(){
         lblNombre.setText(this.trabajador.getNombre() + this.trabajador.getApellidos());
         lblCorreo.setText(this.trabajador.getCorreo());
-        lblId.setText(this.trabajador.getId());
+        lblId.setText(this.trabajador.getId().toString());
     }
     /**
      * @param args the command line arguments

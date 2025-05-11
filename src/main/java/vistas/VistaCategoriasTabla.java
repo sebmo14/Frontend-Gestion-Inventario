@@ -209,7 +209,7 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
 
     private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
         // TODO add your handling code here:
-        String idEliminar = JOptionPane.showInputDialog("Ingrese el Id de la categoria que desea eliminar");
+        Integer idEliminar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Id de la categoria que desea eliminar"));
         clienteCategoria.eliminarCategoria(idEliminar);
         cargarTabla(tblCategorias);
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente");
@@ -218,7 +218,7 @@ public class VistaCategoriasTabla extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        String idEditar = JOptionPane.showInputDialog("Ingrese el id de la categoria que desea editar");
+        Integer idEditar = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el id de la categoria que desea editar"));
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre de la categoria");
         String descripcion = JOptionPane.showInputDialog("Ingrese la descripcion que desea cambiar");
         clienteCategoria.actualizarCategoria(idEditar, nombre, descripcion);

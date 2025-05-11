@@ -54,7 +54,7 @@ public class ProductoClienteHttp {
         return null;
     }
 
-    public static Producto buscarProductoPorId(String id) {
+    public static Producto buscarProductoPorId(Integer id) {
         try {
             Response<Producto> response = apiService.getProductoById(id).execute();
             if (response.isSuccessful()) {
@@ -86,7 +86,7 @@ public class ProductoClienteHttp {
         }
     }
 
-    public static boolean actualizarProducto(String id, String nombre, String descripcion, Categoria categoria, Double precio) {
+    public static boolean actualizarProducto(Integer id, String nombre, String descripcion, Categoria categoria, Double precio) {
     try {
         System.out.println("Buscando producto con ID: " + id);
         Producto productoActualizar = ProductoClienteHttp.buscarProductoPorId(id);
@@ -143,7 +143,7 @@ public class ProductoClienteHttp {
     }
 }
 
-    public static void eliminarProducto(String id) {
+    public static void eliminarProducto(Integer id) {
         try {
             Response<Void> response = apiService.deleteProducto(id).execute();
             if (response.isSuccessful()) {
