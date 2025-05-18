@@ -6,7 +6,6 @@ package vistas;
 
 import ClienteHttp.CategoriaClienteHttp;
 import ClienteHttp.ProductoClienteHttp;
-import ClienteHttp.ProveedorClienteHttp;
 import java.util.List;
 import javax.swing.*;
 
@@ -14,7 +13,6 @@ import modelo.Categoria;
 import modelo.Producto;
 
 import javax.swing.table.DefaultTableModel;
-import modelo.Proveedor;
 import modelo.Trabajador;
 
 /**

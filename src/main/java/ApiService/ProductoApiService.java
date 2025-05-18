@@ -11,6 +11,7 @@ import retrofit2.http.*;
 
 import java.util.List;
 import okhttp3.ResponseBody;
+import utilidades.AuthTokenManager;
 
 /**
  *
@@ -34,5 +35,5 @@ public interface ProductoApiService {
     Call<ResponseBody> updateProductoRaw(@Path("id") Integer id, @Body Producto producto);
 
     @DELETE("/api/productos/{id}")
-    Call<Void> deleteProducto(@Path("id") Integer id);
+    Call<Void> deleteProducto(@Path("id") Integer id, @Header("authorization") String token);
 }

@@ -13,6 +13,7 @@ import modelo.Trabajador;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import utilidades.AuthTokenManager;
 import utilidades.LocalDateAdapter;
 
 import javax.swing.*;
@@ -145,7 +146,11 @@ public class ProductoClienteHttp {
 
     public static void eliminarProducto(Integer id) {
         try {
-            Response<Void> response = apiService.deleteProducto(id).execute();
+            // Agregar "Bearer " delante del token
+            String token = "Bearer " + AuthTokenManager.getToken();
+
+            Response<Void> response = apiService.deleteProducto(id, token).execute();
+
             if (response.isSuccessful()) {
                 System.out.println("Producto eliminado exitosamente");
             } else {
@@ -155,5 +160,6 @@ public class ProductoClienteHttp {
             e.printStackTrace();
         }
     }
+
 
 }

@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Scanner;
 
 import DTO.LoginRequest;
+import DTO.LoginResponse;
 import modelo.Trabajador;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import utilidades.AuthTokenManager;
 
 import javax.swing.*;
 
@@ -105,14 +107,23 @@ public class TrabajadorClienteHttp {
 
     public static Trabajador login(LoginRequest login) {
         try {
-            Response<Trabajador> response = apiService.loginTrabajador(login).execute();
+            Response<LoginResponse> response = apiService.loginTrabajador(login).execute();
             if (response.isSuccessful()) {
-                return response.body();  // Devuelve el trabajador logueado
+                AuthTokenManager.setToken(response.body().getToken());
+
+                // Execute another call to get the worker details
+                Response<Trabajador> trabajadorResponse = apiService.getTrabajadorById(response.body().getIdTrabajador()).execute();
+                if (trabajadorResponse.isSuccessful()) {
+                    return trabajadorResponse.body();  // Return the worker object
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al obtener datos del trabajador: " + trabajadorResponse.code());
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
             }
         } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error de conexión: " + e.getMessage());
         }
         return null;
     }
