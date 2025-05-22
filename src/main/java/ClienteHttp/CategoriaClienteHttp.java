@@ -27,7 +27,7 @@ import java.util.Set;
 public class CategoriaClienteHttp {
 
     Gson gson = new GsonBuilder().registerTypeAdapter(java.time.LocalDate.class, new LocalDateAdapter()).create();
-    private static final String BASE_URL = "http://localhost:8080";
+    private static final String BASE_URL = "https://gestioninventario-boot.onrender.com";
     private static CategoriaApiService apiService;
 
     public CategoriaClienteHttp() {

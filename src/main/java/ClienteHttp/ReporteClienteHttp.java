@@ -19,7 +19,7 @@ import java.util.List;
  * @author MI PC
  */
 public class ReporteClienteHttp {
-    private static final String BASE_URL = "http://localhost:8080";
+    private static final String BASE_URL = "https://gestioninventario-boot.onrender.com";
     private static ReporteApiService apiService;
 
     public ReporteClienteHttp() {
